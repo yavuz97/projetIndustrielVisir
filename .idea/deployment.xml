@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="demo_1.2">
+    <serverData>
+      <paths name="demo_1.2">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="visir_v1" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
