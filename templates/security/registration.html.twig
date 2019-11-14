@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+
+
+
+
+    {{ form_start(form) }}
+<div class="container">
+    <h1 class="row justify-content-center">inscription</h1>
+    <hr class="w-25"/>
+    <div class="d-flex justify-content-center">
+        <div class="border border-dark rounded w-25 p-3">
+            <div class="col">
+    {{ form_row(form.username,  {'label': 'nom de utilisateur'})  }}
+            </div>
+            <div class="col">
+    {{ form_row(form.password,  {'label': 'Mot de passe'})  }}
+            </div>
+            <div class="col">
+    {{ form_row(form.confirm_password,  {'label': 'Confirmer le mot de passe'})  }}
+            </div>
+
+            <br>
+    <button type="submit" class="btn btn-success"> s'inscrire </button>
+</div>
+
+    </div>
+    </div>
+    {{ form_end(form) }}
+
+
+{% endblock %}

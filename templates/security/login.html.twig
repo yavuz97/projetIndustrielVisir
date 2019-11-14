@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1 class="row justify-content-center">Identification</h1>
+        <hr class="w-25"/>
+        <div class="d-flex justify-content-center">
+            <div class="border border-dark rounded w-25 p-3">
+                <form method="post" action="{{ path('security_login') }}">
+                    <div class="col">
+                        <label>Username :</label>
+                        <input type="text" class="form-control" name="_username">
+                    </div>
+                    <div class="col">
+                        <label>Mot de passe :</label>
+                        <input type="password" class="form-control" name="_password">
+                    </div>
+                    <br/>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-outline-success">S'identifier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- NOTES -->
+        <hr class="w-25"/>
+        <h5>Fonctionnalités à venir :</h5>
+        <p>- mot de passe oublié</p>
+        <p>- alerte en cas d'erreur d'authentification</p>
+    </div>
+
+{% endblock %}
