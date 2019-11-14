@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- CONTAINER -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="row justify-content-center">Ajouter un rôle</h1>
+                <hr class="w-25"/>
+                <div class="d-flex justify-content-center">
+                    <div class="border border-dark rounded w-50 p-2">
+                        {{ form_start(formRole) }}
+                        <div class="row">
+                            <div class="col">
+                                {{ form_label(formRole.name, 'Nom du rôle :') }}
+                                {{ form_widget(formRole.name) }}
+                                <br/>
+                                <br>
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success">Ajouter le rôle</button>
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(formRole) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h1 class="row justify-content-center">Liste des rôles</h1>
+                <hr class="w-25"/>
+                <!-- TABLE ROLES -->
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Rôle</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for role in roles %}
+                        <tr>
+                            <td>{{ role.name }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#deleteRole{{ role.id }}"><i class="far fa-trash-alt"></i>
+                                </button>
+
+                                <!-- MODAL DELETE ROLE -->
+                                <div class="modal fade" id="deleteRole{{ role.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Suppression du rôle</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Êtes-vous sûr de vouloir supprimer le rôle "{{ role.name }}" ?</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <a href="{{ path('root_delete_role', {'id': role.id}) }}">
+                                                    <button type="button" class="btn btn-outline-danger">Oui</button>
+                                                </a>
+                                                <button type="button" class="btn btn-outline-success"
+                                                        data-dismiss="modal">Non
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL DELETE ROLE -->
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- END TABLE ROLES -->
+            </div>
+        </div>
+    </div>
+    <!-- END CONTAINER -->
+{% endblock %}

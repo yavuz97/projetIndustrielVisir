@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bf7ee4d585e214c89cfa9a48190feaa",
+    "content-hash": "be49de7f672de12bd31cc0cae93ab081",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -4684,7 +4684,7 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v4.3.7",
+            "version": "v4.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",

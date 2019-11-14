@@ -1,0 +1,239 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <h1 class="row justify-content-center">Liste des utilisateurs</h1>
+                <hr class="w-25"/>
+                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#formUser">
+                    Ajouter un utilisateur
+                </button>
+
+                <!-- NOTES -->
+                <hr class="w-25"/>
+                <h5>notes :</h5>
+                <p>- Lors de réninitialisation de mot de passe, mot de passe par défaut est : 123456789</p>
+
+                <!-- MODAL USER -->
+                <div class="modal fade" id="formUser" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ajout d'un utilisateur</h5>
+                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                            </div>
+                            <form method="post" action="{{ path('root_user') }}">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label>Rôle :
+                                                <select name="user[roles]" class="form-control" required>
+                                                    <option value="">Veuillez sélectionner un rôle</option>
+                                                    {% for role in roles %}
+                                                        <option value="{{ role.name }}">{{ role.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label>Prénom :</label>
+                                            <input type="text" class="form-control" name="user[prenom]" required>
+                                        </div>
+                                        <div class="col">
+                                            <label>Nom de famille :</label>
+                                            <input type="text" class="form-control" name="user[nom]" required>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label>Email :</label>
+                                            <input type="email" class="form-control" name="user[email]" required>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="user[valid]" value="OK">
+                                    <br>
+                                    <p class="text-center">Le mot de passe est par défaut "123456789"</p>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- END MODAL USER -->
+
+                <hr class="w-25"/>
+                <!-- TABLE USERS -->
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Identifiant</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rôle</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roles[0] }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-info" data-toggle="modal"
+                                        data-target="#resetPassword{{ user.id }}"><i class="fas fa-key"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-warning" data-toggle="modal"
+                                        data-target="#editUser{{ user.id }}"><i class="far fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#deleteUser{{ user.id }}"><i class="far fa-trash-alt"></i>
+                                </button>
+
+                                <!-- MODAL RESET PASSWORD -->
+                                <div class="modal fade" id="resetPassword{{ user.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Réinitialisation du mot de passe</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Êtes-vous sûr de vouloir réinitialiser le mot de passe de
+                                                    l'utilisateur "{{ user.username }}" ?</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <a href="{{ path('root_reset_password_user', {'id': user.id}) }}">
+                                                    <button type="submit" class="btn btn-outline-success">Réinitialiser
+                                                    </button>
+                                                </a>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-dismiss="modal">Annuler
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL RESET PASSWORD -->
+
+                                <!-- MODAL EDIT USER -->
+                                <div class="modal fade" id="editUser{{ user.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modifier un utilisateur</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span></button>
+                                            </div>
+                                            <form method="post" action="{{ path('root_edit_user', {'id': user.id}) }}">
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Rôle :
+                                                                <select name="user[roles]" class="form-control"
+                                                                        required>
+                                                                    {% for role in roles %}
+                                                                        <option value="{{ role.name }}">{{ role.name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Prénom :</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="user[firstname]" value="{{ user.prenom }}"
+                                                                   required>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label>Nom de famille :</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="user[lastname]" value="{{ user.nom }}"
+                                                                   required>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Email :</label>
+                                                            <input type="email" class="form-control" name="user[email]"
+                                                                   value="{{ user.email }}"
+                                                                   required>
+                                                        </div>
+
+                                                    </div>
+                                                    <input type="hidden" name="user[valid]" value="OK">
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="submit" class="btn btn-outline-success">Modifier
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                            data-dismiss="modal">Annuler
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL EDIT USER -->
+
+                                <!-- MODAL DELETE USER -->
+                                <div class="modal fade" id="deleteUser{{ user.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Suppression de l'utilisateur</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Êtes-vous sûr de vouloir supprimer l'utilisateur "{{ user.username }}
+                                                    " ?</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <a href="{{ path('root_delete_user', {'id': user.id}) }}">
+                                                    <button type="button" class="btn
+                                                    btn-outline-success">Supprimer
+                                                    </button>
+                                                </a>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-dismiss="modal">Annuler
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL DELETE USER -->
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- END TABLE USERS -->
+            </div>
+        </div>
+
+        <!-- NOTES -->
+        <hr class="w-25"/>
+        <h5>Problèmes :</h5>
+        <p>- le rôle n'est pas sélectionné par défaut quand on modifie un utilisateur</p>
+    </div>
+    <!-- END CONTAINER -->
+{% endblock %}
