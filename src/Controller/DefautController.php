@@ -16,4 +16,16 @@ class DefautController extends AbstractController
             'controller_name' => 'DefautController',
         ]);
     }
+
+    /**
+     * @Route("/profile", name="profile_user")
+     */
+    public function profile()
+    {
+        return $this->render('defaut/profile.html.twig', [
+            'controller_name' => 'DefautController',
+        ]);
+    }
+
+
 }

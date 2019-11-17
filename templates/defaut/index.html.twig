@@ -1,22 +1,279 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefautController!{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    Ceci est ma page de acceuille
+    <!-- page d'acceuille si non connecté -->
+    {% if not app.user %}
+        <link href="{{ asset('css/index.css') }}" rel="stylesheet"/>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/visir_v1/src/Controller/DefautController.php'|file_link(0) }}">src/Controller/DefautController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/visir_v1/templates/defaut/index.html.twig'|file_link(0) }}">templates/defaut/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <h1 class="titleIdx display-1" >VISIR V.02 </h1>
+        <h4 class="subTitleIdx" >Progicielle spécialisé en gestion des élèves <br> <div class="textPerso">l'internat de réuissite </div> </h4>
+
+        <p class="text-dark subTitleIdx">Ce projet est sous la direction de département de STID de iut de Metz mis au <br>point par Yavuzcan ÖZAK &Brandon Royal, Bilal et Nacym</p>
+    {% endif %}
+
+
+
+
+
+
+
+
+    <!-- page d'acceuille si connecté -->
+        <!-- si professeur -->
+    {% if is_granted('ROLE_PROFESSEUR') %}
+        <link href="{{ asset('css/acceuille.css') }}" rel="stylesheet"/>
+        {% block menuAcceuille %}
+
+                {% block modalBouton %}
+                    <div class="row">
+                        <div class="col colStyle" data-toggle="modal" data-target="#eleves">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">ELEVES </h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/graduates-1.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col colStyle" data-toggle="modal" data-target="#personnel">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">PERSONNEL </h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/reading.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col colStyle" data-toggle="modal" data-target="#etablissements">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">ETABLISSEMENTS</h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/school.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col colStyle" data-toggle="modal" data-target="#locaux">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">LOCAUX</h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/history.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col colStyle" data-toggle="modal" data-target="#activites">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">ACTIVITES</h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/theater.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col colStyle" data-toggle="modal" data-target="#absencesRetards">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">ABSENCES & RETARDS</h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/backpack.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col colStyle" data-toggle="modal" data-target="#incidents">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">INCIDENTS</h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/rocket.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col colStyle" data-toggle="modal" data-target="#sanctions">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">SACTIONS</h4>
+                                    <img class="iconMenu" src="{{ asset('icon/education/presentation.svg') }}" alt="Symfony!"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 {% endblock %} <!-- endblock modal boutons -->
+
+            {% block modalContenu %}
+                <!-- Les modals -->
+                <!-- Modal eleves -->
+                <div class="modal fade" id="eleves" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">eleves</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Modal personnel -->
+                <div class="modal fade" id="personnel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">personnel</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal ETABLISSEMENTS -->
+                <div class="modal fade" id="etablissements" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">etablissements</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal LOCAUX -->
+                <div class="modal fade" id="locaux" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">locaux</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Modal ACTIVITES -->
+                <div class="modal fade" id="activites" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">locaux</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Modal ABSENCES & RETARDS -->
+                <div class="modal fade" id="absencesRetards" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">absences & retards</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal INCIDENTS -->
+                <div class="modal fade" id="incidents" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">incidents</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Modal SACTIONS -->
+                <div class="modal fade" id="sanctions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">sanctions</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %} <!-- endblock fin modal contenu -->
+        {% endblock %} <!-- end block menu acceuille -->
+    {% endif %} <!-- end if role professeur is gruanteed-->
+
+
 {% endblock %}

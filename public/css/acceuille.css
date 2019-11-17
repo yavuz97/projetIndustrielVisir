@@ -1,0 +1,36 @@
+body {
+    background-image: url("../image/acceuille/nature.jpg");
+    background-color: #cccccc;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.card-title{
+    text-align: center;
+}
+
+.colStyle {
+    margin: 40px 5px 5px 5px;
+    padding: 10px 7px 2px 7px;
+    border-radius: 50%;
+
+}
+
+.iconMenu{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.card-body{
+    border-radius: 50%;
+
+}
+
+.bg-primary1{
+    background-color: #1a1a1aeb;
+}

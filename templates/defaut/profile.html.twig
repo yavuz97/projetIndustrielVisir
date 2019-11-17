@@ -1,0 +1,228 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+
+        <div class="container">
+            <h1 class="row justify-content-center">Mon profil</h1>
+            <hr class="w-25"/>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        {# INFO #}
+                        <a class="list-group-item list-group-item-action active" data-toggle="list"
+                           href="#list-info">Mes informations</a>
+                        {# ADDRESS #}
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                           href="#list-address">Mes adresses</a>
+                        {# CONTACT #}
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                           href="#list-preference">Mes préférences de contact</a>
+                        {# PASSWORD #}
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                           href="#list-password">Changer mon mot de passe</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="tab-content border border-dark rounded p-3" id="nav-tabContent">
+                        {# INFO #}
+                        <div class="tab-pane fade show active" id="list-info">
+                            <form method="post" action="{# {{ path('default_edit_user', {'id': app.user.id}) }} #}">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="user_username" class="required">Identifiant :</label>
+                                        <input type="text" id="user_username" name="user[username]" required="required"
+                                               maxlength="255" class="form-control" value="{{ app
+                                        .user.username }}" disabled/>
+                                    </div>
+                                    <div class="col">
+                                        <label for="user_prenom" class="required">Prénom :</label>
+                                        <input type="text" id="user_prenom" name="user[prenom]" required="required"
+                                               maxlength="255" class="form-control" value="{{ app.user.prenom }}"/>
+                                    </div>
+                                    <div class="col">
+                                        <label for="user_nom" class="required">Nom :</label>
+                                        <input type="text" id="user_nom" name="user[nom]" required="required"
+                                               maxlength="255" class="form-control" value="{{ app.user.nom }}"/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="user_email" class="required">Email :</label>
+                                        <input type="email" id="user_email" name="user[email]" required="required"
+                                               maxlength="255"
+                                               class="form-control" value="{{ app.user.email }}"/>
+                                    </div>
+                                    <div class="col">
+                                        <label for="user_phone" class="required">Téléphone :</label>
+                                        <input type="tel" id="user_phone" name="user[phone]" required="required"
+                                               class="form-control"
+                                               value="{# {{ app.user.phone }} #}"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success">Changer mes informations</button>
+                                </div>
+                            </form>
+                        </div>
+                        {# ADDRESS #}
+                      {#
+                        <div class="tab-pane fade" id="list-address">
+                            {% for address in userAddress %}
+                                <div class="col">
+                                    <p>{{ address.address }}</p>
+                                    {% if address.additionalAddress %}
+                                        <p>{{ address.additionalAddress }}</p>
+                                    {% endif %}
+                                    <p>{{ address.city }}, {{ address.postalCode }}</p>
+                                    <p>{{ address.country }}</p>
+                                    <button type="button" class="btn btn-outline-warning">Modifier</button>
+                                    <button type="button" class="btn btn-outline-danger">Supprimer</button>
+                                </div>
+                            {% endfor %}
+                        #}
+                            <br/>
+                            <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                    data-target="#modalAddress">Ajouter une adresse
+                            </button>
+                            <!-- MODAL ADDRESS -->
+                            <div class="modal fade" id="modalAddress" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Ajout d'une adresse</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                        {#
+                                        {{ form_start(formAddress) }}
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_label(formAddress.country, 'Pays :') }}
+                                                    {{ form_widget(formAddress.country) }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_label(formAddress.postal_code, 'Code postal :') }}
+                                                    {{ form_widget(formAddress.postal_code) }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_label(formAddress.city, 'Ville :') }}
+                                                    {{ form_widget(formAddress.city) }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_label(formAddress.address, 'Adresse :') }}
+                                                    {{ form_widget(formAddress.address) }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_label(formAddress.additional_address, 'Complément d\'adresse :') }}
+                                                    {{ form_widget(formAddress.additional_address) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-outline-success">Ajouter
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                                                Annuler
+                                            </button>
+                                        </div>
+                                        {{ form_end(formAddress) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODAL ADDRESS -->
+                        </div>
+                #}
+
+                        {# CONTACT #}
+                                        {#
+                                               <div class="tab-pane fade" id="list-preference">
+                                                   <div class="row">
+                                                       <div class="col">
+                                                           <label>Je souhaite être contacté par :</label>
+                                                       </div>
+                                                       {% for aContactType in contactType %}
+                                                           <div class="col">
+
+                                                               <label class="form-check-label">
+                                                                   <input type="checkbox" class="form-check-input"
+                                                                          value="{{ aContactType.id }}">{{ aContactType
+                                                                   .type }}
+                                                               </label>
+
+                                                           </div>
+                                                       {% endfor %}
+                                                   </div>
+                                                   <div class="row justify-content-center">
+                                                       <button type="submit" class="btn btn-outline-success">Enregistrer les modifications
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                           #}
+                        {# PASSWORD #}
+                        <div class="tab-pane fade" id="list-password">
+                            <form method="post" action="{# {{ path('default_edit_password', {'id': app.user.id}) }} #}">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="user_current_password" class="required">Mot de passe actuel
+                                            :</label>
+                                        <input type="password" id="user_current_password" name="user[current_password]"
+                                               required="required"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="user_password" class="required">Nouveau mot de passe :</label>
+                                        <input type="password" id="user_password" name="user[password]"
+                                               required="required"
+                                               class="form-control"/>
+                                    </div>
+                                    <div class="col">
+                                        <label for="user_confirmpassword" class="required">Confirmation du nouveau mot
+                                            de
+                                            passe
+                                            :</label>
+                                        <input type="password" id="user_confirmpassword" name="user[confirmpassword]"
+                                               required="required" class="form-control"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success">Changer mon mot de passe
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTES -->
+            <hr class="w-25"/>
+            <p>- bouton modifier et supprimer pour les adresses non fonctionnel</p>
+            <p>- choix préférence de contact non fonctionnel</p>
+            <p>- changement de mot de passe non fonctionnel</p>
+
+        </div>
+
+    {% endblock %}
+
+
+
+
+

@@ -1,0 +1,48 @@
+body {
+    background-image: url("../image/connection/montain.jpg");
+    background-color: #cccccc;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.titleLogin{
+
+    margin: 30px 0 0 0;
+}
+
+p {
+    color : white;
+}
+
+h1{
+    color: white;
+}
+
+hr{
+    color : white;
+}
+
+.hrColor {
+    color:white;
+}
+.identifiantColor{
+    color: white;
+}
+
+
+
+.btn-outline {
+    border-width: 1px;
+    color: white;
+    border-color: white;
+}
+.border {
+    background-color: #0000009c;
+}
+
+.formControlPerso{
+    background-color: #ced4da61;
+}

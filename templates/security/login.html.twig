@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
+{# the CSS file lives at "public/css/blog.css" #}
 
 {% block body %}
-
+   <link href="{{ asset('css/connection.css') }}" rel="stylesheet"/>
     <div class="container">
-        <h1 class="row justify-content-center">Identification</h1>
-        <hr class="w-25"/>
+        <h1 class="row justify-content-center titleLogin">Identification</h1>
+        <hr class="w-25 "/>
         <div class="d-flex justify-content-center">
             <div class="border border-dark rounded w-25 p-3">
                 <form method="post" action="{{ path('security_login') }}">
                     <div class="col">
-                        <label>Username :</label>
-                        <input type="text" class="form-control" name="_username">
+                        <label class="identifiantColor">Username :</label>
+                        <input type="text" class="form-control formControlPerso" name="_username">
                     </div>
                     <div class="col">
-                        <label>Mot de passe :</label>
-                        <input type="password" class="form-control" name="_password">
+                        <label class="identifiantColor">Mot de passe :</label>
+                        <input type="password" class="form-control formControlPerso" name="_password">
                     </div>
                     <br/>
                     <div class="row justify-content-center">
-                        <button type="submit" class="btn btn-outline-success">S'identifier</button>
+                        <button type="submit" class="btn btn-outline-white">S'identifier</button>
                     </div>
                 </form>
             </div>
