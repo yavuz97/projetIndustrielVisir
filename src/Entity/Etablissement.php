@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,6 +72,13 @@ class Etablissement
      * @ORM\Column(type="integer", nullable=true)
      */
     private $telVieScolaire;
+
+
+
+
+
+
+
 
     public function getId(): ?int
     {
@@ -207,4 +216,9 @@ class Etablissement
 
         return $this;
     }
+
+
+
+
+
 }

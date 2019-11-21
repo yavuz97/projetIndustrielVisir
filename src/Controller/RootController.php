@@ -31,6 +31,7 @@ class RootController extends AbstractController
         $users = $repoUser->findAll();
 
         if ($request->get('user')['valid'] == 'OK') {
+
             $user = new User();
 
             // récupère le prénom et le nom en minuscule

@@ -157,6 +157,10 @@
                             <div class="modal-body">
                                 ...
                             </div>
+                            <!-- le bouton ajout etablissement modal-->
+                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ajoutEtablissement">
+                                Ajouter un etablissement
+                            </button>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
@@ -166,8 +170,9 @@
 
 
                 <!-- Modal LOCAUX -->
-                <div class="modal fade" id="locaux" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+
+                <div class="modal fade bd-example-modal-lg" id="locaux" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">locaux</h5>
@@ -176,8 +181,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+
+                               ...
                             </div>
+                            <!-- le bouton ajout etablissement modal-->
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
@@ -272,6 +280,80 @@
                     </div>
                 </div>
             {% endblock %} <!-- endblock fin modal contenu -->
+            {% block editEtablissement %}
+
+
+                        <div class="modal fade bd-example-modal-lg" id="ajoutEtablissement" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ajout etablissement</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            {{  form_start(etablissementForm) }}
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.nomEtablissement, {'label': 'nom etablissement','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.codeRNE, {'label': 'code RNE','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.secteurMetz, {'label': 'secteur metz ','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.chefEtablissement, {'label': 'chef etablissement ','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.adjoint, {'label': 'adjoint','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.referentES, {'label': 'referent ES','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.telReferent, {'label': 'tel referent','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col">
+                                          {{ form_row(etablissementForm.adresse, {'label': 'adresse','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.codePostal, {'label': 'codePostal','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.telStandard, {'label': 'tel standard','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col">
+                                            {{ form_row(etablissementForm.telVieScolaire, {'label': 'tel vie scolaire','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <br/>
+
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
+                                    </button>
+                                </div>
+                            {{ form_end(etablissementForm) }}
+
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endblock %}
         {% endblock %} <!-- end block menu acceuille -->
     {% endif %} <!-- end if role professeur is gruanteed-->
 

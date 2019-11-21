@@ -1,0 +1,49 @@
+<!-- MODAL USER -->
+                    <div class="modal fade" id="ajoutLocal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ajout d'un Local</h5>
+                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                </div>
+                                <form method="post" action="{{ path('defaut_index') }}">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label>Rôle :
+                                                    <select name="local[lesEtablissement]" class="form-control" required>
+                                                        <option value="">Veuillez sélectionner un rôle</option>
+                                                        {% for etablissement in lesEtablissement %}
+                                                            <option value="{{ etablissement.nomEtablissement }}">{{ etablissement.nomEtablissement }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label>capacite :</label>
+                                                <input type="number" class="form-control" name="local[capacite]" required>
+                                            </div>
+                                            <div class="col">
+                                                <label>libelle :</label>
+                                                <input type="text" class="form-control" name="local[libelle]" >
+                                            </div>
+
+                                        </div>
+                                        <br/>
+
+                                        <input type="hidden" name="local[valid]" value="OK">
+                                        <br>
+                                        <p class="text-center">Le mot de passe est par défaut "123456789"</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
