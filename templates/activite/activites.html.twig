@@ -10,148 +10,129 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col">
-                    <h1 class="row justify-content-center">Liste des locaux</h1>
+                    <h1 class="row justify-content-center">Liste des Activites</h1>
                     <hr class="w-25"/>
                     <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ajoutLocal">
-                        Ajouter un local
+                        Ajouter un activite
                     </button>
 
 
-                    <!-- MODAL ajout local -->
+                    <!-- MODAL ajout activite -->
                     <div class="modal fade" id="ajoutLocal" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Ajout d'un local</h5>
+                                    <h5 class="modal-title">Ajout d'un activite</h5>
                                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                 </div>
-                                {{  form_start(localForm) }}
+                                <form method="post" action="{{ path('les_activites', {'id': activite.id}) }}">
                                     <div class="modal-body">
 
+
                                         <div class="row">
                                             <div class="col">
-                                                {{ form_row(localForm.libelle, {'label': 'libelle','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                            <div class="col">
-                                                {{ form_row(localForm.capacite, {'label': 'capacite','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(localForm.utilisation, {'label': 'utilisation','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                            <div class="col">
-                                                {{ form_row(localForm.specialisee, {'label': 'specialisée','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(localForm.observations, {'label': 'observations','attr': {'class': 'form-control'}})  }}
+                                                <label>nom :</label>
+                                                <input type="text" class="form-control"
+                                                       name="activite[nom]" value="{{ activite.nom }}"
+                                                >
                                             </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col">
+                                                <label>code regroupement :</label>
+                                                <input type="text" class="form-control"
+                                                       name="activite[codeRegroupement]" value="{{ activite.codeRegroupement }}"
+                                                >
+                                            </div>
+
+                                            <div class="col">
+                                                <label> code statistique :</label>
+                                                <input type="text" class="form-control"
+                                                       name="activite[codeStatistique]" value="{{ activite.codeStatistique }}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="activite[valid]" value="OK">
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="submit" class="btn btn-outline-success">Ajouter</button>
-                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
+                                        <button type="submit" class="btn btn-outline-success">Ajouter
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger"
+                                                data-dismiss="modal">Annuler
                                         </button>
                                     </div>
-                                {{ form_end(localForm) }}
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- END MODAL ajout local -->
+                    <!-- END MODAL ajout activite -->
 
                     <hr class="w-25"/>
                     <!-- TABLE USERS -->
                     <table class="table table-bordered text-center">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">libelle</th>
-                            <th scope="col">capacite</th>
-                            <th scope="col">utilisation</th>
-                            <th scope="col">specialisee</th>
-                            <th scope="col">observations</th>
+                            <th scope="col">nom</th>
+                            <th scope="col">codeStatistique</th>
+                            <th scope="col">codeRegroupement</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for local in lesLocaux %}
+                        {% for activite in lesActivites %}
                             <tr>
-                                <td>{{ local.libelle }}</td>
-                                <td>{{ local.capacite }}</td>
-                                <td>{{ local.utilisation }}</td>
-                                <td>{{ local.specialisee }}</td>
-                                <td>{{ local.observations}}</td>
+                                <td>{{ activite.nom }}</td>
+                                <td>{{ activite.codeStatistique }}</td>
+                                <td>{{ activite.codeRegroupement }}</td>
                                 <td>
                                     <button type="button" class="btn btn-outline-warning" data-toggle="modal"
-                                             data-target="#editLocal{{ local.id }}"><i class="far fa-edit"></i>
+                                             data-target="#editActivite{{ activite.id }}"><i class="far fa-edit"></i>
                                     </button>
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal"
-                                            data-target="#deleteLocal{{ local.id }}"><i class="far fa-trash-alt"></i>
+                                            data-target="#deleteActivite{{ activite.id }}"><i class="far fa-trash-alt"></i>
                                     </button>
 
 
 
                                     <!-- MODAL EDIT USER -->
-                                    <div class="modal fade" id="editLocal{{ local.id }}" tabindex="-1">
+                                    <div class="modal fade" id="editActivite{{ activite.id }}" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Modifier un utilisateur</h5>
+                                                    <h5 class="modal-title">Modifier un activite</h5>
                                                     <button type="button" class="close" data-dismiss="modal">
                                                         <span>&times;</span></button>
                                                 </div>
 
-                                                <form method="post" action="{{ path('locaux_edit_local', {'id': local.id}) }}">
+                                                <form method="post" action="{{ path('activites_edit_activite', {'id': activite.id}) }}">
                                                     <div class="modal-body">
 
 
                                                         <div class="row">
                                                             <div class="col">
-                                                                <label>libelle :</label>
+                                                                <label>nom :</label>
                                                                 <input type="text" class="form-control"
-                                                                       name="local[libelle]" value="{{ local.libelle }}"
-                                                                       >
-                                                            </div>
-                                                            <div class="col">
-                                                                <label> capacite :</label>
-                                                                <input type="number" class="form-control"
-                                                                       name="local[capacite]" value="{{ local.capacite }}"
+                                                                       name="activite[nom]" value="{{ activite.nom }}"
                                                                        >
                                                             </div>
                                                         </div>
 
                                                         <div class="row">
                                                             <div class="col">
-                                                                <label>utilisation :</label>
+                                                                <label>code regroupement :</label>
                                                                 <input type="text" class="form-control"
-                                                                       name="local[utilisation]" value="{{ local.utilisation }}"
+                                                                       name="activite[codeRegroupement]" value="{{ activite.codeRegroupement }}"
                                                                        >
                                                             </div>
                                                             <div class="col">
-
-                                                                <label>spécialisée :
-                                                                    <select name="local[specialisee]" class="form-control"
-                                                                            required>
-
-                                                                            <option value="1">oui</option>
-                                                                            <option value={{ non }}>non</option>
-
-                                                                    </select>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label>observations :</label>
+                                                                <label> codeStatistique :</label>
                                                                 <input type="text" class="form-control"
-                                                                       name="local[observations]" value="{{ local.observations }}"
-                                                                       >
+                                                                       name="activite[codeStatistique]" value="{{ activite.codeStatistique }}"
+                                                                >
                                                             </div>
                                                         </div>
 
-
-                                                        <input type="hidden" name="local[valid]" value="OK">
+                                                        <input type="hidden" name="activite[valid]" value="OK">
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
                                                         <button type="submit" class="btn btn-outline-success">Modifier
@@ -167,21 +148,21 @@
                                     <!-- END MODAL EDIT USER -->
 
                                     <!-- MODAL DELETE LOCAL -->
-                                    <div class="modal fade" id="deleteLocal{{ local.id }}" tabindex="-1">
+                                    <div class="modal fade" id="deleteActivite{{ activite.id }}" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Suppression d'un local</h5>
+                                                    <h5 class="modal-title">Suppression d'un activite</h5>
                                                     <button type="button" class="close" data-dismiss="modal">
                                                         <span>&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Êtes-vous sûr de vouloir supprimer local "{{ local.libelle }}
+                                                    <p>Êtes-vous sûr de vouloir supprimer activite "{{ activite.nom }}
                                                         " ?</p>
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
-                                                    <a href="{{ path('locaux_delete_local', {'id': local.id}) }}">
+                                                    <a href="{{ path('activites_delete_activite', {'id': activite.id}) }}">
                                                         <button type="button" class="btn
                                                     btn-outline-success">Supprimer
                                                         </button>
