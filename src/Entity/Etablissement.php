@@ -73,6 +73,27 @@ class Etablissement
      */
     private $telVieScolaire;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $ville;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CpeEtablissement", mappedBy="etablissement")
+     */
+    private $lesCpeEtablissement;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Personnel", mappedBy="etablissement")
+     */
+    private $lesPersonnels;
+
+    public function __construct()
+    {
+        $this->lesCpeEtablissement = new ArrayCollection();
+        $this->lesPersonnels = new ArrayCollection();
+    }
+
 
 
 
@@ -213,6 +234,80 @@ class Etablissement
     public function setTelVieScolaire(?int $telVieScolaire): self
     {
         $this->telVieScolaire = $telVieScolaire;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CpeEtablissement[]
+     */
+    public function getLesCpeEtablissement(): Collection
+    {
+        return $this->lesCpeEtablissement;
+    }
+
+    public function addLesCpeEtablissement(CpeEtablissement $lesCpeEtablissement): self
+    {
+        if (!$this->lesCpeEtablissement->contains($lesCpeEtablissement)) {
+            $this->lesCpeEtablissement[] = $lesCpeEtablissement;
+            $lesCpeEtablissement->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesCpeEtablissement(CpeEtablissement $lesCpeEtablissement): self
+    {
+        if ($this->lesCpeEtablissement->contains($lesCpeEtablissement)) {
+            $this->lesCpeEtablissement->removeElement($lesCpeEtablissement);
+            // set the owning side to null (unless already changed)
+            if ($lesCpeEtablissement->getEtablissement() === $this) {
+                $lesCpeEtablissement->setEtablissement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Personnel[]
+     */
+    public function getLesPersonnels(): Collection
+    {
+        return $this->lesPersonnels;
+    }
+
+    public function addLesPersonnel(Personnel $lesPersonnel): self
+    {
+        if (!$this->lesPersonnels->contains($lesPersonnel)) {
+            $this->lesPersonnels[] = $lesPersonnel;
+            $lesPersonnel->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesPersonnel(Personnel $lesPersonnel): self
+    {
+        if ($this->lesPersonnels->contains($lesPersonnel)) {
+            $this->lesPersonnels->removeElement($lesPersonnel);
+            // set the owning side to null (unless already changed)
+            if ($lesPersonnel->getEtablissement() === $this) {
+                $lesPersonnel->setEtablissement(null);
+            }
+        }
 
         return $this;
     }

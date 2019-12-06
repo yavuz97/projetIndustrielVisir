@@ -67,6 +67,16 @@ class User implements  UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Personnel", mappedBy="user", orphanRemoval=true)
+     */
+    private $lesPersonnels;
+
+    public function __construct()
+    {
+        $this->lesPersonnels = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +164,37 @@ class User implements  UserInterface
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Personnel[]
+     */
+    public function getLesPersonnels(): Collection
+    {
+        return $this->lesPersonnels;
+    }
+
+    public function addLesPersonnel(Personnel $lesPersonnel): self
+    {
+        if (!$this->lesPersonnels->contains($lesPersonnel)) {
+            $this->lesPersonnels[] = $lesPersonnel;
+            $lesPersonnel->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesPersonnel(Personnel $lesPersonnel): self
+    {
+        if ($this->lesPersonnels->contains($lesPersonnel)) {
+            $this->lesPersonnels->removeElement($lesPersonnel);
+            // set the owning side to null (unless already changed)
+            if ($lesPersonnel->getUser() === $this) {
+                $lesPersonnel->setUser(null);
+            }
+        }
 
         return $this;
     }

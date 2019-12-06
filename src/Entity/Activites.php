@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,16 @@ class Activites
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $travailaPrevoir;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="activites")
+     */
+    private $lesPersonnels;
+
+    public function __construct()
+    {
+        $this->lesPersonnels = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +131,32 @@ class Activites
     public function setTravailaPrevoir(?string $travailaPrevoir): self
     {
         $this->travailaPrevoir = $travailaPrevoir;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Personnel[]
+     */
+    public function getLesPersonnels(): Collection
+    {
+        return $this->lesPersonnels;
+    }
+
+    public function addLesPersonnel(Personnel $lesPersonnel): self
+    {
+        if (!$this->lesPersonnels->contains($lesPersonnel)) {
+            $this->lesPersonnels[] = $lesPersonnel;
+        }
+
+        return $this;
+    }
+
+    public function removeLesPersonnel(Personnel $lesPersonnel): self
+    {
+        if ($this->lesPersonnels->contains($lesPersonnel)) {
+            $this->lesPersonnels->removeElement($lesPersonnel);
+        }
 
         return $this;
     }

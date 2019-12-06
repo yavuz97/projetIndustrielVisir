@@ -51,6 +51,7 @@ class ActiviteController extends AbstractController
             'lesActivites' => $lesActivites, // envoi à la vue les les activites
 
 
+
         ]);
 
     }

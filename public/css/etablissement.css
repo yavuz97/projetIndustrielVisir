@@ -1,0 +1,24 @@
+body {
+    background-image: url("../image/etablissement/school.png");
+    background-color: #cccccc;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+
+.yavuz{
+    color: black;
+    font-family: Brush Script MT;
+    margin: 29px 0 0 100px;
+}
+
+.titleIdx{
+    margin: 89px 0 15px 67px;
+}
+
+.subTitleIdx{
+    margin: 19px 0 0 23px;
+}

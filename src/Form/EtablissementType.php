@@ -23,6 +23,7 @@ class EtablissementType extends AbstractType
             ->add('adresse')
             ->add('codePostal')
             ->add('telStandard')
+            ->add('ville')
             ->add('telVieScolaire')
 
         ;
