@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EleveController!{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+<div class="container">
+
+
+
+
+        {{ form_row(form.nom, {'label': 'Nom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.prenom,   {'label': 'Prénom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.sexe,   {'label': 'Sexe','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.dateNaiss,   {'label': 'Date de naissance','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.etabOrigine,   {'label': 'Etablissement d\'origine','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.classOrigine,   {'label': 'Classe d\'origine','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.entreeIR,   {'label': 'Entrée IR','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.sortieIR,   {'label': 'Sortie IR','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.motifSortie,   {'label': 'Motif sortie IR','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telPortable,   {'label': 'Téléphone portable','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.email,   {'label': 'Email','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.chambre,   {'label': 'Chambre','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telStandart,   {'label': 'Téléphone standart','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.classActuelle,   {'label': 'Classe actuellet','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.niveau,   {'label': 'Niveau','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.enseignement,   {'label': 'Enseignement','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.specialite,   {'label': 'Spécialité','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telResEs,   {'label': 'Téléphone responsable ES','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.etage,   {'label': 'Etage','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.suivieScolaire,   {'label': 'Suivis scolaire','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.particularite,   {'label': 'Particularité','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.RLprioritaire,   {'label': 'RL prioritaire','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.lienR1,   {'label': 'Lien R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.adresseR1,   {'label': 'Adresse R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.codePostR1,   {'label': 'Code postale R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.villeR1,   {'label': 'Ville R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telFixeR1,   {'label': 'Téléphone fixe R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telPortR1,   {'label': 'Téléphone portable R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telTravailleR1,   {'label': 'Téléphone travail R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.emailR1,   {'label': 'Email R1','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.respLegal2,   {'label': 'Résponsable légal 2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.lienRL2,   {'label': 'Lien RL2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.adresseR2,   {'label': 'Adresse R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.codePostR2,   {'label': 'Code postale R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.villeR2,   {'label': 'Ville R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telFixeR2,   {'label': 'Téléphone fixe R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telPortR2,   {'label': 'Téléphone portable R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telTravailleR2,   {'label': 'Téléphone travail R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.emailR2,   {'label': 'Email R2','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.autreContact,   {'label': 'Autre contact','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.lienAC,   {'label': 'Lien AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.adresseAC,   {'label': 'Adresse AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.codePostAC,   {'label': 'Code postale AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.villeAC,   {'label': 'Ville AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telFixeAc,   {'label': 'Téléphone fixe AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telPortAc,   {'label': 'Téléphone portable AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.telTravailleAc,   {'label': 'Téléphone travail AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.emailAc,   {'label': 'Email AC','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.educatifNom,   {'label': 'Educatif nom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.educatifPrenom,   {'label': 'Educatif prénom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.educatifOrganisme,   {'label': 'Educatif organisme','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.educatifTel,   {'label': 'Educatif téléphone','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.educatifEmail,   {'label': 'Educatif email','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.medicament,   {'label': 'Médicament','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.santeNom,   {'label': 'Santé nom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.santePrenom,   {'label': 'Santé prénom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.santeOrganisme,   {'label': 'Santé organisme','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.santeTelephone,   {'label': 'Santé téléphone','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.santeEmail,   {'label': 'Santé email','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.socialeNom,   {'label': 'Social nom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.socialePrenom,   {'label': 'Social prénom','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.socialeOrganisme,   {'label': 'Social organisme','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.socialeTel,   {'label': 'Social téléphone','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.socialeEmail,   {'label': 'Social email','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.Xpass,   {'label': 'Xpass','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.categorieEco,   {'label': 'Catégorie économique','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.QFFM,   {'label': 'QFFM','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.parsBses,   {'label': 'ParBses','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.PecPar,   {'label': 'PecPar','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.montant,   {'label': 'Montant','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.ligneBus,   {'label': 'Ligne de bus','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.departIR,   {'label': 'Départ de l\'internat','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.notes,   {'label': 'Notes','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.engagementInitial,   {'label': 'Engagement initial','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.charteVieCollective,   {'label': 'Charte vie collective','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.ficheInfermerie,   {'label': 'Fiche d\'infirmerie','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.charteCDI,   {'label': 'Charte CDI','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.charteInfo,   {'label': 'Charte informatique','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.avisImposition,   {'label': 'Avis d\'imposition','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.retourSeulDomicile,   {'label': 'Retour seul domicile','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.droitImage,   {'label': 'Droit d\'image','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.presenceDimancheSoir,   {'label': 'Présence dimanche soir','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.autonomieChambre,   {'label': 'Autonomie chambre','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.PAI,   {'label': 'PAI','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.aideSupp,   {'label': 'Aide supplémentaire','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.sortieEducative,   {'label': 'Sortie éducative','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.dossierRentre,   {'label': 'Dossier rentrreé','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.presenceVendrediSoir,   {'label': 'Présence vendredi soir','attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.presenceCouponImage,   {'label': 'Présence coupon','attr': {'class': 'form-control'}}) }}
+
+
+
+    <button type="submit" class="btn btn-success">
+            {% if editMode %}
+                Enregistrer les modifications
+            {% else %}
+                Ajouter le eleve
+            {% endif %}
+            {{ form_end(form) }}
+        </button>
+
+
+</div>
+
+
+{% endblock %}

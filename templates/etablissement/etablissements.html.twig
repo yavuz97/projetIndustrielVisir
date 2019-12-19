@@ -30,555 +30,510 @@
                     <!-- Debut affichachage modal etablissement -->
                     {% for etablissement in lesEtablissement %}
 
-                    <div class="tab-pane fade" id="{{ etablissement.nomEtablissement|replace({' ': ''}) }}" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="tab-pane fade" id="{{ etablissement.nomEtablissement|replace({' ': ''}) }}" role="tabpanel" aria-labelledby="list-profile-list">
 
 
 
-                        <div class="jumbotron">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <h1 class="display-4">{{ etablissement.nomEtablissement }}</h1>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn-danger"> code RNE : {{ etablissement.codeRNE }}</button>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-
-                                <div class="col-8">
-
-
-                                    <div class="card bg-secondary mb-auto" style="max-width: 50rem;">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Personnel <i class="fas fa-user-tag"></i>  </h4>
-                                        </div>
-                                        <div class="card-body">
-
-                                            <table class="table table-bordered text-center">
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row" >Chef etablissement</th>
-                                                    <td>{{ etablissement.chefEtablissement }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Adjoint</th>
-                                                    <td>{{ etablissement.adjoint }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Cpe</th>
-                                                    <td>
-                                                        <ul>
-                                                            {% for cpe in etablissement.lesCpeEtablissement %}
-                                                                <li>{{ cpe.nom }}  {{ cpe.prenom }} </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </td>
-
-                                                </tr>
-                                                </tbody>
-                                            </table>
-
-
-                                        </div>
+                            <div class="jumbotron">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h1 class="display-4">{{ etablissement.nomEtablissement }}</h1>
                                     </div>
-
-
-
-
+                                    <div class="col-4">
+                                        <button class="btn-danger"> code RNE : {{ etablissement.codeRNE }}</button>
+                                    </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="card bg-secondary mb-3" style="max-width: 20rem;">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Contacs <i class="fas fa-phone"></i> </h4>
+
+
+                                <div class="row">
+
+                                    <div class="col-8">
+
+
+                                        <div class="card bg-secondary mb-auto" style="max-width: 50rem;">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Personnel <i class="fas fa-user-tag"></i>  </h4>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <table class="table table-bordered text-center">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row" >Chef etablissement</th>
+                                                        <td>{{ etablissement.chefEtablissement }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Adjoint</th>
+                                                        <td>{{ etablissement.adjoint }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Cpe</th>
+                                                        <td>
+                                                            <ul>
+                                                                {% for cpe in etablissement.lesCpeEtablissement %}
+                                                                    <li>{{ cpe.nom }}  {{ cpe.prenom }} </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </td>
+
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+
+                                            </div>
                                         </div>
+
+
+
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="card bg-secondary mb-3" style="max-width: 20rem;">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Contacs <i class="fas fa-phone"></i> </h4>
+                                            </div>
+                                                <div class="card-body">
+
+                                                    <ul>
+                                                        <li>vie scolaire : {{ etablissement.telVieScolaire }}</li>
+                                                        <li>standard     : {{ etablissement.telStandard }}</li>
+                                                        <li>référent     : {{ etablissement.telReferent }}</li>
+                                                    </ul>
+                                                </div>
+                                        </div>
+
+
+                                        <div class="card bg-secondary mb-3" style="max-width: 20rem;">
+                                            <div class="card-header">
+                                                <h4 class="card-title">adresse <i class="fas fa-address-card"></i> </h4>
+                                            </div>
                                             <div class="card-body">
 
                                                 <ul>
-                                                    <li>vie scolaire : {{ etablissement.telVieScolaire }}</li>
-                                                    <li>standard     : {{ etablissement.telStandard }}</li>
-                                                    <li>référent     : {{ etablissement.telReferent }}</li>
+                                                    <li>ville : {{ etablissement.ville }} </li>
+                                                    <li>code postale     : {{ etablissement.codePostal }}</li>
+                                                    <li>adresse     : {{ etablissement.adresse }}</li>
                                                 </ul>
                                             </div>
-                                    </div>
-
-
-                                    <div class="card bg-secondary mb-3" style="max-width: 20rem;">
-                                        <div class="card-header">
-                                            <h4 class="card-title">adresse <i class="fas fa-address-card"></i> </h4>
                                         </div>
-                                        <div class="card-body">
+                                     </div>
+                                </div>
 
-                                            <ul>
-                                                <li>ville : {{ etablissement.ville }} </li>
-                                                <li>code postale     : {{ etablissement.codePostal }}</li>
-                                                <li>adresse     : {{ etablissement.adresse }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                 </div>
+                                <hr class="my-4">
+                                <p class="lead justify-content-center">
+                                    <a class="btn btn-warning btn-lg" href="#" role="button" data-toggle="modal"
+                                       data-target="#editEtablissement{{ etablissement.id }}">Modifier </a>
+
+                                    <a class="btn btn-danger btn-lg" href="#" role="button" data-toggle="modal"
+                                       data-target="#deleteEtablissement{{ etablissement.id }}">Supprimmer</a>
+
+                                </p>
                             </div>
-
-                            <hr class="my-4">
-                            <p class="lead justify-content-center">
-                                <a class="btn btn-warning btn-lg" href="#" role="button" data-toggle="modal"
-                                   data-target="#editEtablissement{{ etablissement.id }}">Modifier </a>
-
-                                <a class="btn btn-danger btn-lg" href="#" role="button" data-toggle="modal"
-                                   data-target="#deleteEtablissement{{ etablissement.id }}">Supprimmer</a>
-
-                            </p>
                         </div>
-                    </div>
-                        <!-- End affichachage modal etablissement -->
+                            <!-- End affichachage modal etablissement -->
 
-                        <!-- MODAL ajout etablissements -->
-                        <div class="modal fade bd-example-modal-lg" id="ajoutEtablissement" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">ajout etablissement</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
+                            <!-- MODAL ajout etablissements -->
+                            <div class="modal fade bd-example-modal-lg" id="ajoutEtablissement" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">ajout etablissement</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
 
-                                    {{  form_start(etablissementForm) }}
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.nomEtablissement, {'label': 'nom etablissement','attr': {'class': 'form-control'}})  }}
+                                        {{  form_start(etablissementForm) }}
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.nomEtablissement, {'label': 'nom etablissement','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.codeRNE, {'label': 'code RNE','attr': {'class': 'form-control'}})  }}
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.codeRNE, {'label': 'code RNE','attr': {'class': 'form-control'}})  }}
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.secteurMetz, {'label': 'secteur metz ','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.chefEtablissement, {'label': 'chef etablissement ','attr': {'class': 'form-control'}})  }}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.secteurMetz, {'label': 'secteur metz ','attr': {'class': 'form-control'}})  }}
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.adjoint, {'label': 'adjoint','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.referentES, {'label': 'referent ES','attr': {'class': 'form-control'}})  }}
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.chefEtablissement, {'label': 'chef etablissement ','attr': {'class': 'form-control'}})  }}
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.telReferent, {'label': 'tel referent','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.adresse, {'label': 'adresse','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.codePostal, {'label': 'codePostal','attr': {'class': 'form-control'}})  }}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.adjoint, {'label': 'adjoint','attr': {'class': 'form-control'}})  }}
+                                            <div class="row">
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.telStandard, {'label': 'tel standard','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.telVieScolaire, {'label': 'tel vie scolaire','attr': {'class': 'form-control'}})  }}
+                                                </div>
+                                                <div class="col">
+                                                    {{ form_row(etablissementForm.ville, {'label': 'ville','attr': {'class': 'form-control'}})  }}
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.referentES, {'label': 'referent ES','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.telReferent, {'label': 'tel referent','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.adresse, {'label': 'adresse','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.codePostal, {'label': 'codePostal','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.telStandard, {'label': 'tel standard','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.telVieScolaire, {'label': 'tel vie scolaire','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                            <div class="col">
-                                                {{ form_row(etablissementForm.ville, {'label': 'ville','attr': {'class': 'form-control'}})  }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="specification" id="dynamic-fields">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <label>prenom CPE :</label>
-                                                            <input type="text" name="specification[cpePrenom][]"
-                                                                   class="form-control"/>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label>nom CPE :</label>
-                                                            <input type="text" name="specification[cpeNom][]"
-                                                                   class="form-control"/>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label>Ajout CPE :</label>
-                                                            <br/>
-                                                            <button type="button" id="add-fields"
-                                                                    class="btn btn-outline-success"><i
-                                                                        class="far fa-plus-square"></i>
-                                                            </button>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="specification" id="dynamic-fields">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <label>prenom CPE :</label>
+                                                                <input type="text" name="specification[cpePrenom][]"
+                                                                       class="form-control"/>
+                                                            </div>
+                                                            <div class="col">
+                                                                <label>nom CPE :</label>
+                                                                <input type="text" name="specification[cpeNom][]"
+                                                                       class="form-control"/>
+                                                            </div>
+                                                            <div class="col">
+                                                                <label>Ajout CPE :</label>
+                                                                <br/>
+                                                                <button type="button" id="add-fields"
+                                                                        class="btn btn-outline-success"><i
+                                                                            class="far fa-plus-square"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <br/>
+
                                         </div>
-                                        <br/>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
+                                            </button>
+                                        </div>
+                                        {{ form_end(etablissementForm) }}
 
                                     </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="submit" class="btn btn-outline-success">Ajouter</button>
-                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
-                                        </button>
-                                    </div>
-                                    {{ form_end(etablissementForm) }}
-
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- MODAL EDIT ETABLISSEMENT -->
-                        <div class="modal fade bd-example-modal-lg" id="editEtablissement{{ etablissement.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Modifier un etablissement</h5>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span></button>
-                                    </div>
+                            <!-- MODAL EDIT ETABLISSEMENT -->
+                            <div class="modal fade bd-example-modal-lg" id="editEtablissement{{ etablissement.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Modifier un etablissement</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span></button>
+                                        </div>
 
-                                    <form method="post" action="{{ path('etablissements_edit_etablissement', {'id': etablissement.id}) }}">
-                                        <div class="modal-body">
-
+                                        <form method="post" action="{{ path('etablissements_edit_etablissement', {'id': etablissement.id}) }}">
+                                            <div class="modal-body">
 
 
 
 
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <label>nomEtablissement :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[nomEtablissement]" value="{{ etablissement.nomEtablissement }}"
-                                                    >
-                                                </div>
-                                                <div class="col">
-                                                    <label> codeRNE :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[codeRNE]" value="{{ etablissement.codeRNE }}"
-                                                    >
-                                                </div>
-                                                <div class="col">
-                                                    <label> secteurMetz :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[secteurMetz]" value="{{ etablissement.secteurMetz }}"
-                                                    >
-                                                </div>
-                                                <div class="col">
-                                                    <label> codePostal :</label>
-                                                    <input type="number" class="form-control"
-                                                           name="etablissement[codePostal]" value="{{ etablissement.codePostal}}"
-                                                    >
-                                                </div>
-                                            </div>
 
-                                            <div class="row">
-
-                                                <div class="col">
-                                                    <label> tel vie scolaire :</label>
-                                                    <input type="number" class="form-control"
-                                                           name="etablissement[telVieScolaire]" value="{{ etablissement.telVieScolaire }}"
-                                                    >
-                                                </div>
-
-                                                <div class="col">
-                                                    <label> tel standard :</label>
-                                                    <input type="number" class="form-control"
-                                                           name="etablissement[telStandard]" value="{{ etablissement.telStandard }}"
-                                                    >
-                                                </div>
-
-                                                <div class="col">
-                                                    <label> tel référent  :</label>
-                                                    <input type="number" class="form-control"
-                                                           name="etablissement[telReferent]" value="{{ etablissement.telReferent  }}"
-                                                    >
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label> chefEtablissement :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[chefEtablissement]" value="{{ etablissement.chefEtablissement }}"
-                                                    >
-                                                </div>
-                                                <div class="col">
-                                                    <label> adjoint :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[adjoint]" value="{{ etablissement.adjoint}}"
-                                                    >
-                                                </div>
-                                                <div class="col">
-                                                    <label> referentES  :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[referentES]" value="{{ etablissement.referentES  }}"
-                                                    >
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-
-                                                <div class="col">
-                                                    <label> ville :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[ville]" value="{{ etablissement.ville }}"
-                                                    >
-                                                </div>
-
-                                                <div class="col">
-                                                    <label> adresse :</label>
-                                                    <input type="text" class="form-control"
-                                                           name="etablissement[adresse]" value="{{ etablissement.adresse }}"
-                                                    >
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5 style="text-align: right"> le(s) cpe d'etablissement</h5>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <a class="btn btn-success btn-sm" href="#" role="button" data-toggle="modal"
-                                                       data-target="#ajoutCpe{{ etablissement.id }}">ajouter cpe </a>
-                                                </div>
-                                            </div>
-
-                                            <hr class="w-25"/>
-
-
-                                            {% for cpe in etablissement.lesCpeEtablissement %}
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <label> nom :</label>
+                                                    <div class="col-4">
+                                                        <label>nomEtablissement :</label>
                                                         <input type="text" class="form-control"
-                                                               name="etablissementCpe[nom]" value="{{ cpe.nom }}"
+                                                               name="etablissement[nomEtablissement]" value="{{ etablissement.nomEtablissement }}"
+                                                        >
+                                                    </div>
+                                                    <div class="col">
+                                                        <label> codeRNE :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[codeRNE]" value="{{ etablissement.codeRNE }}"
+                                                        >
+                                                    </div>
+                                                    <div class="col">
+                                                        <label> secteurMetz :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[secteurMetz]" value="{{ etablissement.secteurMetz }}"
+                                                        >
+                                                    </div>
+                                                    <div class="col">
+                                                        <label> codePostal :</label>
+                                                        <input type="number" class="form-control"
+                                                               name="etablissement[codePostal]" value="{{ etablissement.codePostal}}"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col">
+                                                        <label> tel vie scolaire :</label>
+                                                        <input type="number" class="form-control"
+                                                               name="etablissement[telVieScolaire]" value="{{ etablissement.telVieScolaire }}"
                                                         >
                                                     </div>
 
                                                     <div class="col">
-                                                        <label> prenom :</label>
-                                                        <input type="text" class="form-control"
-                                                               name="etablissementCpe[prenom]" value="{{ cpe.prenom }}"
+                                                        <label> tel standard :</label>
+                                                        <input type="number" class="form-control"
+                                                               name="etablissement[telStandard]" value="{{ etablissement.telStandard }}"
                                                         >
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label> tel référent  :</label>
+                                                        <input type="number" class="form-control"
+                                                               name="etablissement[telReferent]" value="{{ etablissement.telReferent  }}"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label> chefEtablissement :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[chefEtablissement]" value="{{ etablissement.chefEtablissement }}"
+                                                        >
+                                                    </div>
+                                                    <div class="col">
+                                                        <label> adjoint :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[adjoint]" value="{{ etablissement.adjoint}}"
+                                                        >
+                                                    </div>
+                                                    <div class="col">
+                                                        <label> referentES  :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[referentES]" value="{{ etablissement.referentES  }}"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col">
+                                                        <label> ville :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[ville]" value="{{ etablissement.ville }}"
+                                                        >
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label> adresse :</label>
+                                                        <input type="text" class="form-control"
+                                                               name="etablissement[adresse]" value="{{ etablissement.adresse }}"
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h5 style="text-align: right"> le(s) cpe d'etablissement</h5>
                                                     </div>
                                                     <div class="col-lg-3">
-                                                    <button class="btn-danger" data-toggle="modal" data-target="#supprimerCpe{{ cpe.id }}">
-                                                        Supprimmer : {{ etablissement.codeRNE }}</button>
+                                                        <a class="btn btn-success btn-sm" href="#" role="button" data-toggle="modal"
+                                                           data-target="#ajoutCpe{{ etablissement.id }}">ajouter cpe </a>
                                                     </div>
-
                                                 </div>
-                                            {% endfor %}
+
+                                                <hr class="w-25"/>
 
 
-                                            <input type="hidden" name="etablissement[valid]" value="OK">
+                                                {% for cpe in etablissement.lesCpeEtablissement %}
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label> nom :</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="etablissementCpe[nom]" value="{{ cpe.nom }}"
+                                                            >
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <label> prenom :</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="etablissementCpe[prenom]" value="{{ cpe.prenom }}"
+                                                            >
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                        <button class="btn-danger" data-toggle="modal" data-target="#supprimerCpe{{ cpe.id }}">
+                                                            Supprimmer : {{ etablissement.codeRNE }}</button>
+                                                        </div>
+
+                                                    </div>
+                                                {% endfor %}
+
+
+                                                <input type="hidden" name="etablissement[valid]" value="OK">
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="submit" class="btn btn-outline-success">Modifier
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-dismiss="modal">Annuler
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODAL EDIT ETABLISSEMENT -->
+
+                            <!-- MODAL DELETE ETABLISSEMENT -->
+                            <div class="modal fade" id="deleteEtablissement{{ etablissement.id }}" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Suppression d'un etablissement</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
                                         </div>
-                                        <div class="modal-footer justify-content-center">
-                                            <button type="submit" class="btn btn-outline-success">Modifier
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger"
-                                                    data-dismiss="modal">Annuler
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END MODAL EDIT ETABLISSEMENT -->
-
-                        <!-- MODAL DELETE ETABLISSEMENT -->
-                        <div class="modal fade" id="deleteEtablissement{{ etablissement.id }}" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Suppression d'un etablissement</h5>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Êtes-vous sûr de vouloir supprimer etablissement "{{ etablissement.nomEtablissement }}
-                                            " ?</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <a href="{{ path('etablissements_delete_etablissement', {'id': etablissement.id}) }}">
-                                            <button type="button" class="btn
-                                                    btn-outline-success">Supprimer
-                                            </button>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger"
-                                                data-dismiss="modal">Annuler
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END MODAL DELETE ETABLISSEMENT -->
-
-                        <!-- MODAL DELETE ETABLISSEMENT -->
-                        <div class="modal fade" id="deleteEtablissement{{ etablissement.id }}" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Suppression d'un etablissement</h5>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Êtes-vous sûr de vouloir supprimer etablissement "{{ etablissement.nomEtablissement }}
-                                            " ?</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <a href="{{ path('etablissements_delete_etablissement', {'id': etablissement.id}) }}">
-                                            <button type="button" class="btn
-                                                    btn-outline-success">Supprimer
-                                            </button>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger"
-                                                data-dismiss="modal">Annuler
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END MODAL DELETE ETABLISSEMENT -->
-
-
-
-
-
-
-
-                        <!-- MODAL AJOUT CPE  -->
-                        <div class="modal fade bd-example-modal-lg" id="ajoutCpe{{ etablissement.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Ajouter un cpe</h5>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span></button>
-                                    </div>
-
-                                    <form method="post" action="{{ path('ajoutCpeEtablissement', {'id': etablissement.id}) }}">
                                         <div class="modal-body">
-
-                                            <h5 style="text-align: center"> le(s) cpe d'etablissement</h5>
-                                            <hr class="w-25"/>
-
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label> nom :</label>
-                                                        <input type="text" class="form-control"
-                                                               name="etablissementCpe[nom]"
-                                                        >
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <label> prenom :</label>
-                                                        <input type="text" class="form-control"
-                                                               name="etablissementCpe[prenom]"
-                                                        >
-                                                    </div>
-                                                </div>
-
-
-                                            <input type="hidden" name="etablissement[valid]" value="OK">
+                                            <p>Êtes-vous sûr de vouloir supprimer etablissement "{{ etablissement.nomEtablissement }}
+                                                " ?</p>
                                         </div>
                                         <div class="modal-footer justify-content-center">
-                                            <button type="submit" class="btn btn-outline-success">Ajouter
-                                            </button>
+                                            <a href="{{ path('etablissements_delete_etablissement', {'id': etablissement.id}) }}">
+                                                <button type="button" class="btn
+                                                        btn-outline-success">Supprimer
+                                                </button>
+                                            </a>
                                             <button type="button" class="btn btn-outline-danger"
                                                     data-dismiss="modal">Annuler
                                             </button>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- END MODAL EDIT ETABLISSEMENT -->
+                            <!-- END MODAL DELETE ETABLISSEMENT -->
 
-
-
-
-
-
-
-
-
-
-
-                        {#
-                        <!-- MODAL DELETE CPE -->
-
-                        <div class="modal fade" {% for cpe in etablissement.lesCpeEtablissement %}id="deleteCpe{{ cpe.id }}" {% endfor %}tabindex="-1">
-
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Suppression d'un cpe</h5>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Êtes-vous sûr de vouloir supprimer cpe {% for cpe in etablissement.lesCpeEtablissement %}  "{{ cpe.nom }}{% endfor %}
-                                            " ?</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        {% for cpe in etablissement.lesCpeEtablissement %} <a href="{{ path('etablissements_delete_CPE', {'id':  cpe.id}) }}">{% endfor %}
-                                            <button type="button" class="btn
-                                                    btn-outline-success">Supprimer
+                            <!-- MODAL DELETE ETABLISSEMENT -->
+                            <div class="modal fade" id="deleteEtablissement{{ etablissement.id }}" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Suppression d'un etablissement</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
                                             </button>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger"
-                                                data-dismiss="modal">Annuler
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END MODAL DELETE ETABLISSEMENT -->
-                        #}
-
-
-
-
-                    {% for cpe in etablissement.lesCpeEtablissement %}
-                        <!-- MODAL DELETE CPE -->
-                        <div class="modal fade" id="supprimerCpe{{ cpe.id }}" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Suppression d'un cpe</h5>
-                                        <button type="button" class="close" data-dismiss="modal">
-                                            <span>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Êtes-vous sûr de vouloir supprimer etablissement "{{ cpe.prenom }}
-                                            " ?</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <a href="{{ path('etablissements_delete_CPE', {'id': cpe.id}) }}">
-                                            <button type="button" class="btn
-                                                    btn-outline-success">Supprimer
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Êtes-vous sûr de vouloir supprimer etablissement "{{ etablissement.nomEtablissement }}
+                                                " ?</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <a href="{{ path('etablissements_delete_etablissement', {'id': etablissement.id}) }}">
+                                                <button type="button" class="btn
+                                                        btn-outline-success">Supprimer
+                                                </button>
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    data-dismiss="modal">Annuler
                                             </button>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger"
-                                                data-dismiss="modal">Annuler
-                                        </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- END MODAL DELETE CPE -->
+                            <!-- END MODAL DELETE ETABLISSEMENT -->
 
-                    {% endfor %}
+
+
+
+
+
+
+                            <!-- MODAL AJOUT CPE  -->
+                            <div class="modal fade bd-example-modal-lg" id="ajoutCpe{{ etablissement.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Ajouter un cpe</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span></button>
+                                        </div>
+
+                                        <form method="post" action="{{ path('ajoutCpeEtablissement', {'id': etablissement.id}) }}">
+                                            <div class="modal-body">
+
+                                                <h5 style="text-align: center"> le(s) cpe d'etablissement</h5>
+                                                <hr class="w-25"/>
+
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label> nom :</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="etablissementCpe[nom]"
+                                                            >
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <label> prenom :</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="etablissementCpe[prenom]"
+                                                            >
+                                                        </div>
+                                                    </div>
+
+
+                                                <input type="hidden" name="etablissement[valid]" value="OK">
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="submit" class="btn btn-outline-success">Ajouter
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-dismiss="modal">Annuler
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODAL EDIT ETABLISSEMENT -->
+
+
+                        {% for cpe in etablissement.lesCpeEtablissement %}
+                            <!-- MODAL DELETE CPE -->
+                            <div class="modal fade" id="supprimerCpe{{ cpe.id }}" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Suppression d'un cpe</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Êtes-vous sûr de vouloir supprimer etablissement "{{ cpe.prenom }}
+                                                " ?</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <a href="{{ path('etablissements_delete_CPE', {'id': cpe.id}) }}">
+                                                <button type="button" class="btn
+                                                        btn-outline-success">Supprimer
+                                                </button>
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    data-dismiss="modal">Annuler
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODAL DELETE CPE -->
+
+                        {% endfor %}
 
                     {% endfor %}
 

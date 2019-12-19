@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191129092939 extends AbstractMigration
+final class Version20191216162458 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,8 @@ final class Version20191129092939 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE cpe_etablissement (id INT AUTO_INCREMENT NOT NULL, etablissement_id INT DEFAULT NULL, prenom VARCHAR(50) DEFAULT NULL, nom VARCHAR(50) DEFAULT NULL, INDEX IDX_1959D583FF631228 (etablissement_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE cpe_etablissement ADD CONSTRAINT FK_1959D583FF631228 FOREIGN KEY (etablissement_id) REFERENCES etablissement (id)');
+        $this->addSql('ALTER TABLE sequence ADD time_sequence VARCHAR(255) NOT NULL COMMENT \'(DC2Type:dateinterval)\'');
+        $this->addSql('ALTER TABLE voiture_personnel CHANGE personnel_id personnel_id INT NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,6 +31,7 @@ final class Version20191129092939 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE cpe_etablissement');
+        $this->addSql('ALTER TABLE sequence DROP time_sequence');
+        $this->addSql('ALTER TABLE voiture_personnel CHANGE personnel_id personnel_id INT DEFAULT NULL');
     }
 }

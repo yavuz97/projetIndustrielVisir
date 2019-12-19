@@ -38,9 +38,15 @@ class Activite
      */
     private $personnels;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sequence", mappedBy="activite", orphanRemoval=true)
+     */
+    private $lesSequences;
+
     public function __construct()
     {
         $this->personnels = new ArrayCollection();
+        $this->lesSequences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,6 +113,37 @@ class Activite
         if ($this->personnels->contains($personnel)) {
             $this->personnels->removeElement($personnel);
             $personnel->removeLesActivite($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sequence[]
+     */
+    public function getLesSequences(): Collection
+    {
+        return $this->lesSequences;
+    }
+
+    public function addLesSequence(Sequence $lesSequence): self
+    {
+        if (!$this->lesSequences->contains($lesSequence)) {
+            $this->lesSequences[] = $lesSequence;
+            $lesSequence->setActivite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesSequence(Sequence $lesSequence): self
+    {
+        if ($this->lesSequences->contains($lesSequence)) {
+            $this->lesSequences->removeElement($lesSequence);
+            // set the owning side to null (unless already changed)
+            if ($lesSequence->getActivite() === $this) {
+                $lesSequence->setActivite(null);
+            }
         }
 
         return $this;

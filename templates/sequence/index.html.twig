@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SequenceController!{% endblock %}
+
+{% block body %}
+
+
+
+
+        <table class="table table-borderless">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">activite</th>
+                <th scope="col">personnel</th>
+                <th scope="col">salle</th>
+                <th scope="col">heure debut</th>
+                <th scope="col">heure fin</th>
+                <th scope="col">date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sequence in lesSequences %}
+                <tr>
+                    <th scope="row">{{ sequence.id }}</th>
+                   <td>{{ sequence.activite.nom }}</td>
+                    <td>{{ sequence.personnel.user.nom }}</td>
+                    <td>{{ sequence.salle}}</td>
+                    <td>{{ sequence.heureDebut|date("g:ia")}}</td>
+                    <td>{{ sequence.heureFin|date("g:ia")}}</td>
+                    <td>{{ sequence.date|date ('d/m/y') }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+
+
+
+
+<form method="post" action="{{ path('sequenceAjout') }}">
+
+        <label>Salle :</label>
+        <input type="text" class="form-control" name="sequence[salle]" >
+
+    <SELECT name="sequence[activite][]" class="form-control" >
+        {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+     </SELECT>
+
+    <SELECT name="sequence[personnel][]" class="form-control" >
+        {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
+    </SELECT>
+
+    <label>heure debut :</label>
+    <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" >
+
+    <label>heure fin :</label>
+    <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" >
+
+    <label>Date :</label>
+    <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy">
+
+        <input type="hidden" name="sequence[valid]" value="OK">
+        <button type="submit" class="btn btn-outline-success">Ajouter</button>
+
+</form>
+
+
+
+
+
+
+    {% for sequence in lesSequences %}
+        <button  type="button"  href="#" role="button" data-toggle="modal"
+                 data-target="#deleteSequence{{ sequence.id }}" class="ActivitesBtn btn btn-danger  btn-block btn-sm">supprimer le sequence</button>
+
+
+
+        <!-- MODAL DELETE SEQUENCE -->
+        <div class="modal fade" id="deleteSequence{{ sequence.id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Suppression de sequence</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Êtes-vous sûr de vouloir effacer  le sequence   de  n° {{ sequence.id }}
+                            " ?</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <a href="{{ path('deleteSequence', {'id': sequence.id}) }}">
+                            <button type="button" class="btn  btn-outline-success">Supprimer
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-outline-danger"
+                                data-dismiss="modal">Annuler
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL DELETE SEQUENCE -->
+
+
+
+
+        <form method="post" action="{{ path('sequenceModify', {'id': sequence.id}) }}">
+
+        <label>Salle :</label>
+        <input type="text" class="form-control" name="sequence[salle]" value="{{ sequence.salle }}" >
+            <br>
+
+        <SELECT name="sequence[activite][]" class="form-control" >
+            <option>{{ sequence.activite.id }}  {{ sequence.activite.nom }}</option>
+            {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+        </SELECT>
+
+        <SELECT name="sequence[personnel][]" class="form-control" >
+            <option> {{ sequence.personnel.id }} {{ sequence.personnel.user.nom }}</option>
+            {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
+        </SELECT>
+
+        <label>heure debut :</label>
+        <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" value="{{ sequence.heureDebut|date("g:ia")}}">
+
+        <label>heure fin :</label>
+        <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" value="{{ sequence.heureFin|date("g:ia")}}">
+
+        <label>Date :</label>
+        <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy" value="{{ sequence.date|date ('d/m/y') }}">
+
+        <input type="hidden" name="sequence[valid]" value="OK">
+        <button type="submit" class="btn btn-outline-warning">modifier</button>
+
+    </form>
+
+
+    {% endfor %}
+
+
+
+{% endblock %}

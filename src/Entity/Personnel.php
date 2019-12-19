@@ -24,7 +24,7 @@ class Personnel
     private $fonction;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $actionIR;
 
@@ -105,14 +105,20 @@ class Personnel
     private $lesActivites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\VoiturePersonnel", mappedBy="personnel")
+     * @ORM\OneToMany(targetEntity="App\Entity\VoiturePersonnel", mappedBy="personnel", orphanRemoval=true)
      */
     private $lesVoitures;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sequence", mappedBy="personnel", orphanRemoval=true)
+     */
+    private $lesSequences;
 
     public function __construct()
     {
         $this->lesActivites = new ArrayCollection();
         $this->lesVoitures = new ArrayCollection();
+        $this->lesSequences = new ArrayCollection();
     }
 
 
@@ -135,12 +141,12 @@ class Personnel
         return $this;
     }
 
-    public function getActionIR(): ?int
+    public function getActionIR(): ?string
     {
         return $this->actionIR;
     }
 
-    public function setActionIR(?int $actionIR): self
+    public function setActionIR(?string $actionIR): self
     {
         $this->actionIR = $actionIR;
 
@@ -366,6 +372,37 @@ class Personnel
             // set the owning side to null (unless already changed)
             if ($lesVoiture->getPersonnel() === $this) {
                 $lesVoiture->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sequence[]
+     */
+    public function getLesSequences(): Collection
+    {
+        return $this->lesSequences;
+    }
+
+    public function addLesSequence(Sequence $lesSequence): self
+    {
+        if (!$this->lesSequences->contains($lesSequence)) {
+            $this->lesSequences[] = $lesSequence;
+            $lesSequence->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesSequence(Sequence $lesSequence): self
+    {
+        if ($this->lesSequences->contains($lesSequence)) {
+            $this->lesSequences->removeElement($lesSequence);
+            // set the owning side to null (unless already changed)
+            if ($lesSequence->getPersonnel() === $this) {
+                $lesSequence->setPersonnel(null);
             }
         }
 

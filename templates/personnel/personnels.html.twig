@@ -1,0 +1,1381 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    <link href="{{ asset('css/personnel.css') }}" rel="stylesheet"/>
+
+    {# LIST PERSONNEL #}
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <!-- menu de navbar gauche des etablissements -->
+
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active list-group-item-success" id="list-home-list" data-toggle="modal"  data-target=".ajoutPersonnel" href="#list-home" role="tab" aria-controls="home">AJOUTER UN PERSONNEL</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">personnes avec voiture</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">liste de personnel</a>
+                    {% for user in users %}
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#{{ user.nom|replace({' ': ''}) }}" role="tab" aria-controls="profile">{{ user.prenom}} {{ user.nom }}</a>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+        <!-- END  menu de navbar gauche des etablissements -->
+
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                    <h1>LES Personnels</h1>
+                    <img class="kedi" src="{{ asset('image/personnel/kedi.png') }}" alt="Symfony!"/>
+
+                </div>
+
+
+                    {% for user in users %}
+
+
+                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                             <div class="row">
+                                     <div class="col-lg-6">
+                                         <table class="table table-bordered">
+                                             <thead>
+                                             <tr>
+                                                 <th scope="col">Personnel avec voiture</th>
+                                             </tr>
+                                             </thead>
+                                             <tbody>
+                                             {% for user in users %}
+                                                 {% for personnel in user.lesPersonnels  %}
+                                                     {% for voiture in   personnel.lesVoitures %}
+                                                         <tr>
+                                                             <td>  <a data-toggle="list" href="#{{ user.nom|replace({' ': ''}) }}" >{{ user.prenom}} {{ user.nom }}</a> </td>
+                                                         </tr>
+                                                     {% endfor %}
+                                                 {% endfor %}
+                                             {% endfor %}
+
+                                             </tbody>
+                                         </table>
+                                     </div>
+                                     <div class="col-lg-6">
+                                         <table class="table table-bordered">
+                                             <thead>
+                                             <tr>
+                                                 <th scope="col">Personnel sans voiture</th>
+                                             </tr>
+                                             </thead>
+                                             <tbody>
+                                             {% for user in users %}
+                                                 {% for personnel in user.lesPersonnels  %}
+                                                     {% if  personnel.lesVoitures is empty  %}
+                                                         <tr>
+                                                             <td>  <a data-toggle="list" href="#{{ user.nom|replace({' ': ''}) }}" >{{ user.prenom}} {{ user.nom }}</a> </td>
+                                                         </tr>
+                                                     {% endif %}
+                                                 {% endfor %}
+                                             {% endfor %}
+
+                                             </tbody>
+                                         </table>
+                                     </div>
+                             </div>
+                        </div>
+
+
+                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+
+                            <table class="table table-borderless">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">PRENOM</th>
+                                    <th scope="col">NOM</th>
+                                    <th scope="col">EMAIL</th>
+                                    <th scope="col">TÉLÉPHONE </th>
+                                    <th scope="col">ORGANISME </th>
+                                    <th scope="col">FONCTION </th>
+                                    <th scope="col">CATE XPASS </th>
+                                    <th scope="col">TP</th>
+                                    <th scope="col">ACTION IR </th>
+                                    <th scope="col">RESPONSABLE </th>
+                                    <th scope="col"> DATE ENTREE</th>
+                                    <th scope="col"> DATE SORTIE</th>
+                                    <th scope="col">NIVEAU ETUDE </th>
+                                    <th scope="col">HAUT DIPLOME </th>
+                                    <th scope="col"> SPECIALITÉ</th>
+                                    <th scope="col">FORMATION EN COURS </th>
+                                    <th scope="col">DROIT 200H </th>
+                                    <th scope="col">Les activites </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    {% for personnel in user.lesPersonnels  %}
+                                <tr>
+                                    <th scope="row">{{ user.id }}</th>
+                                    <td>{{ user.prenom }}</td>
+                                    <td>{{ user.nom }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ personnel.tel }}</td>
+                                    <td>{{ personnel.organisme }}</td>
+                                    <td>{{ personnel.fonction }}</td>
+                                    <td>{{ personnel.numCarteXpass }}</td>
+                                    <td>{{ personnel.tp }}</td>
+                                    <td>{{ personnel.actionIR }}</td>
+                                    <td>{{ personnel.responsable }}</td>
+                                    <td>{{ personnel.dateEntree|date('d/m/y') }}</td>
+                                    <td>{{ personnel.dateSortie|date('d/m/y') }}</td>
+                                    <td>{{ personnel.niveauEtude }}</td>
+                                    <td>{{ personnel.specialite }}</td>
+                                    <td>{{ personnel.hautDiplome }}</td>
+                                    <td>{{ personnel.formationEnCours }}</td>
+                                    <td>{{ personnel.droit200h }}</td>
+
+                                </tr>
+                                      {% endfor %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                        <div class="tab-pane fade" id="{{ user.nom|replace({' ': ''}) }}" role="tabpanel" aria-labelledby="list-profile-list">
+
+                             {#  INFORMATION PERSONNEL #}
+                                 <fieldset>
+                                     <legend>Information Personnel </legend>
+                                     <div class="row">
+                                         <div class="col-lg-4">
+                                             <div class="row">
+                                                 <img class="centerImg" src="{{ asset('image/personnel/ajout_person.jpg') }}" alt="Symfony!"/>
+                                             </div>
+                                             <br>
+                                             <div class="row userName">
+
+                                                 <p>  Username     : {{ user.prenom }}.{{ user.nom }}</p>
+                                                 <p> Mot de passe defaut par défaut : 123456789 </p>
+
+                                             </div>
+                                         </div>
+                                         <div class="col-lg-8">
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Prenom </h4>  <p class="fontCustomP"> {{ user.prenom }}</p>
+                                                 </div>
+                                                 <div class="col-lg-6">
+                                                     <h4>Nom</h4>  <p class="fontCustomP"> {{ user.nom }}</p>
+                                                 </div>
+
+                                             </div>
+
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Email</h4>  <p class="fontCustomP"> <p class="fontCustomP"> {{ user.email }}</p>
+                                                 </div>
+                                             </div>
+                                             {#  MODAL SUPPRIMER #}
+                                             {% for personnel in user.lesPersonnels  %}
+                                                 <div class="row">
+                                                     <div class="col-lg-6">
+                                                             <h4>Téléphone</h4>  <p class="fontCustomP"> {{ personnel.tel }}</p>
+                                                     </div>
+                                                 </div>
+                                             {% endfor %}
+                                             <a class="btn btn-danger btn-lg float-right" href="#" role="button" data-toggle="modal"
+                                                data-target="#deleteEtablissement{{ user.id }}">Supprimmer </a>
+                                             <a class="btn btn-warning btn-lg" href="#" role="button" data-toggle="modal"
+                                                data-target="#editEtablissement{{ user.id }}">Modifier </a>
+
+
+
+
+
+                                             <!-- MODAL DELETE ETABLISSEMENT -->
+                                             <div class="modal fade" id="deleteEtablissement{{ user.id }}" tabindex="-1">
+                                                 <div class="modal-dialog modal-dialog-centered">
+                                                     <div class="modal-content">
+                                                         <div class="modal-header">
+                                                             <h5 class="modal-title">Suppression d'une personnel</h5>
+                                                             <button type="button" class="close" data-dismiss="modal">
+                                                                 <span>&times;</span>
+                                                             </button>
+                                                         </div>
+                                                         <div class="modal-body">
+                                                             <p>Êtes-vous sûr de vouloir supprimer person "{{ user.prenom }}
+                                                                 " ?</p>
+                                                         </div>
+                                                         <div class="modal-footer justify-content-center">
+                                                             <a href="{{ path('personnels_delete_personnel', {'id': user.id}) }}">
+                                                                 <button type="button" class="btn
+                                                                btn-outline-success">Supprimer
+                                                                 </button>
+                                                             </a>
+                                                             <button type="button" class="btn btn-outline-danger"
+                                                                     data-dismiss="modal">Annuler
+                                                             </button>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <!-- END MODAL DELETE ETABLISSEMENT -->
+
+
+
+
+                                         </div>
+                                     </div>
+                                 </fieldset>
+
+
+                             {% if  user.lesPersonnels is empty  %}
+                                 <div class="alert alert-dismissible alert-info">
+                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                     <h4 class="alert-heading">Info</h4>
+                                     <p class="mb-0"> Cette utilisateur de l'applciation n'es pas un personnel </p>
+                                 </div>
+                             {% endif %}
+
+
+                             {% for personnel in user.lesPersonnels  %}
+                             {# ORGANISME LIE #}
+                                 <fieldset>
+                                     <legend> organisme lié </legend>
+                                     <div class="row">
+                                         <div class="col-lg-4">
+                                             <div class="row">
+                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/ajout_school.png') }}" alt="Symfony!"/>
+                                             </div>
+                                             <br>
+                                         </div>
+                                         <div class="col-lg-8">
+                                             <div class="col-lg-10">
+                                                 <h4>Organisme </h4>
+                                                 <p class="fontCustomP"> {{ personnel.organisme }}</p>
+                                             </div>
+                                             <div class="col-lg-10">
+                                                 <h4>Organisme </h4>  <p class="fontCustomP">{{ personnel.etablissement.nomEtablissement }}</p>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </fieldset>
+
+                                 {# VOITURE PERSONNEL #}
+
+                                 {% if  personnel.lesVoitures is empty  %}
+                                     <fieldset>
+                                         <legend> Voiture personnel  </legend>
+                                         <div class="row">
+                                             <div class="col-lg-4">
+                                                 <div class="row">
+                                                     <img class="centerImgSchool" src="{{ asset('image/personnel/noneCar.jpg') }}" alt="Symfony!"/>
+                                                 </div>
+                                                 <br>
+                                             </div>
+                                             <div class="col-lg-8">
+                                                 <div class="alert alert-dismissible alert-danger">
+                                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                     <p class="mb-0">Pesonne n'as pas de voiture </p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </fieldset>
+                                 {% endif %}
+                                 {% for voiture in personnel.lesVoitures %}
+
+                                         <fieldset>
+                                             <legend> Voiture personnel  </legend>
+                                             <div class="row">
+                                                 <div class="col-lg-4">
+                                                     <div class="row">
+                                                         <img class="centerImgSchool" src="{{ asset('image/personnel/ajout_car.png') }}" alt="Symfony!"/>
+                                                     </div>
+                                                     <br>
+                                                 </div>
+                                                 <div class="col-lg-8">
+                                                         <div class="row">
+                                                             <div class="col-lg-6">
+                                                                 <h4>Marque </h4>
+                                                                 <p class="fontCustomP"> {{ voiture.marque }}</p>
+                                                             </div>
+                                                             <div class="col-lg-6">
+                                                                 <h4>Modele </h4>
+                                                                 <p class="fontCustomP"> {{ voiture.modele }}</p>
+                                                             </div>
+                                                         </div>
+                                                         <div class="row">
+                                                             <div class="col-lg-6">
+                                                                 <h4>Couleur </h4>
+                                                                 <button type="button" class=" btn btn-primary btn-sm">{{ voiture.couleur }}</button>
+                                                                 <br>
+                                                             </div>
+                                                             <div class="col-lg-6">
+                                                                 <h4>Badge </h4>
+                                                                 <p class="fontCustomP"> {{ voiture.badge }}</p>
+                                                             </div>
+                                                         </div>
+                                                        <br>
+                                                         <div class="col-lg-10">
+                                                             <h4>Immarticulation </h4>
+                                                             <p class="fontCustomP"> {{ voiture.immarticulation }}</p>
+                                                         </div>
+                                                 </div>
+                                             </div>
+                                         </fieldset>
+                                 {% endfor %}
+
+
+                                 {# ROLE #}
+                                 <fieldset>
+                                     <legend> Rôle </legend>
+                                     <div class="row">
+                                         <div class="col-lg-4">
+                                             <div class="row">
+                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/work.png') }}" alt="Symfony!"/>
+                                             </div>
+                                         </div>
+                                         <div class="col-lg-8">
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Fonction </h4>
+                                                     <p class="fontCustomP"> {{ personnel.fonction }}</p>
+                                                 </div>
+                                             </div>
+                                             <br>
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Cate Xpass  </h4>
+                                                     <button type="button" class=" btn btn-info btn-sm"style="left: auto">{{ personnel.numCarteXpass }}</button>
+                                                 </div>
+                                                 <div class="col-lg-6" style="left: auto">
+                                                     <h4 style="margin: 0 0 -0 -94px">TP </h4>
+                                                     <button type="button" class="  btn btn-info btn-sm"style="margin: 0 0 -0 -94px">{{  personnel.tp  }}</button>
+                                                 </div>
+                                             </div>
+                                             <br>
+                                             <div class="row">
+                                                 <div class="col-lg-4">
+                                                     <h4 class="centerB">Action ir </h4>
+                                                     {% if personnel.actionIR  ==  "non" %}
+                                                     <button type="button" class="  btn btn-danger btn-sm" style="left: auto">{{ personnel.actionIR }}</button>
+                                                     {% else %}
+                                                     <button type="button" class="  btn btn-success btn-sm"style="left: auto">{{ personnel.actionIR }}</button>
+                                                     <br>
+                                                     {% endif %}
+                                                 </div>
+                                                 <div class="col-lg-4">
+                                                     <h4 class="centerB">Responsable </h4>
+                                                     {% if personnel.responsable  ==  "non" %}
+                                                         <button type="button" class="  btn btn-danger btn-sm" style="left: auto">{{ personnel.responsable }} </button>
+                                                     {% else %}
+                                                         <button type="button" class="  btn btn-success btn-sm" style="left: auto">{{ personnel.responsable }}</button>
+                                                         <br>
+                                                     {% endif %}
+                                                 </div>
+
+                                             </div>
+                                             <br>
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Date Entree </h4>
+                                                     <p class="fontCustomP"> {{ personnel.dateEntree |date("m/d/Y") }}</p>
+                                                 </div>
+                                                 <div class="col-lg-6">
+                                                     <h4>Date Sortie </h4>
+                                                     <p class="fontCustomP"> {{ personnel.dateSortie |date("m/d/Y") }}</p>
+                                                 </div>
+                                             </div>
+                                             <br>
+
+
+                                         </div>
+                                     </div>
+                                 </fieldset>
+
+
+
+                                 {# NIVEAU ETUDES#}
+                                 <fieldset>
+                                     <legend> Niviveau Etudes </legend>
+                                     <div class="row">
+                                         <div class="col-lg-4">
+                                             <div class="row">
+                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/diplome.jpg') }}" alt="Symfony!"/>
+                                             </div>
+                                             <br>
+                                         </div>
+                                         <div class="col-lg-8">
+                                             <div class="row">
+                                                 <div class="col-lg-10">
+                                                     <h4>Niveau Etude </h4>
+                                                     <p class="fontCustomP"> {{ personnel.niveauEtude }}</p>
+                                                 </div>
+                                             </div>
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Haut diplome </h4>
+                                                     <p class="fontCustomP"> {{ personnel.hautDiplome }}</p>
+                                                 </div>
+                                                 <div class="col-lg-6">
+                                                     <h4>Specialité </h4>
+                                                     <p class="fontCustomP"> {{ personnel.specialite }}</p>
+                                                 </div>
+                                             </div>
+                                             <div class="row">
+                                                 <div class="col-lg-6">
+                                                     <h4>Formation en cours </h4>
+                                                     <p class="fontCustomP"> {{ personnel.formationEnCours }}</p>
+                                                 </div>
+                                                 <div class="col-lg-6">
+                                                     <h4>Droit 200h</h4>
+                                                     <p class="fontCustomP"> {{ personnel.droit200h }}</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </fieldset>
+
+
+
+                                 <fieldset>
+                                     <legend> Les activites </legend>
+                                     <div class="row">
+                                         <div class="col-lg-4">
+                                             <div class="row">
+                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/activite.jpg') }}" alt="Symfony!"/>
+                                             </div>
+                                             <br>
+                                         </div>
+                                         <div class="col-lg-8">
+                                             {% if  personnel.lesActivites is empty  %}
+
+                                                 <div class="alert alert-dismissible alert-primary">
+                                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                      Aucune activité saisit pour la personne
+                                                 </div>
+
+                                             {% endif %} {#personnel.lesActivites is empty#}
+
+                                             {% for activite in personnel.lesActivites  %}
+                                                 <button type="button" class="ActivitesBtn btn btn-success  btn-block"> {{ activite.nom }}</button>
+                                             {% endfor %}  {# activite in personnel.lesActivites#}
+                                         </div>
+                                     </div>
+                                 </fieldset>
+
+                             {% endfor %}
+                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {% block editPersonnel %}
+
+                            <!-- MODAL EDIT ETABLISSEMENT -->
+                            <div class="modal fade bd-example-modal-lg" id="editEtablissement{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Modifier un personnel</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span></button>
+                                        </div>
+
+                                        <form method="post" action="{{ path('personnels_edit_personnel', {'id': user.id}) }}">
+                                            <div class="modal-body">
+
+                                                {#  INFORMATION PERSONNEL #}
+                                                <fieldset>
+                                                    <legend>Information Personnel </legend>
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <div class="row">
+                                                                <img class="centerImg" src="{{ asset('image/personnel/ajout_person.jpg') }}" alt="Symfony!"/>
+                                                            </div>
+                                                            <br>
+                                                            <div class="row userName">
+
+                                                                Username     : <p id="usernameJS1"></p>.<p id="usernameJS2"></p>
+                                                                Mot de passe : 123456789
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label>Prénom :</label>
+                                                                    <input id="input1"  type="text" class="form-control" name="user[prenom]"  value="{{ user.prenom}}" required>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label>Nom de famille :</label>
+                                                                    <input id="input2" type="text" class="form-control" name="user[nom]"  value="{{ user.nom}}"  required>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label>Email :</label>
+                                                                    <input type="email" class="form-control" name="user[email]"  value="{{ user.email}}" required>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    {% for personnel in user.lesPersonnels   %}
+                                                                        <label>Téléphone :</label>
+                                                                        <input type="text" class="form-control" name="personnel[tel]" value=" {{ personnel.tel }}">
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+
+                                                {# ORGANISME LIE #}
+                                                {% for personnel in user.lesPersonnels  %}
+
+
+
+
+
+                                                    <fieldset>
+                                                        <legend> organisme lié </legend>
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="row">
+                                                                    <img class="centerImgSchool " src="{{ asset('image/personnel/ajout_school.png') }}" alt="Symfony!"/>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="col-lg-10">
+                                                                    <label>Organisme :</label>
+                                                                    <SELECT type="text" class="form-control" name="personnel[organisme]">
+                                                                        <OPTION> {{ personnel.organisme }}</OPTION>
+                                                                        <option>Education_nationale</option>
+                                                                        <option>Region_lorraine</option>
+                                                                        <option>Association</option>
+                                                                        <option>Club</option>
+                                                                        <option>Autonome</option>
+                                                                        <option>Famille_resident</option>
+                                                                    </SELECT>
+                                                                </div>
+                                                                <div class="col-lg-10">
+                                                                    <label>Etablissement :</label>
+                                                                    {# <input  type="text" class="form-control" name="personnel[etablissement]" value="{{ personnel.etablissement.nomEtablissement }}">#}
+                                                                    <SELECT name="personnel[etablissement]"  class="form-control" >
+                                                                        <OPTION>  {{ personnel.etablissement.id }}  {{ personnel.etablissement.nomEtablissement }}</OPTION>
+                                                                        {% for etablissement in etabli  %}
+                                                                            <OPTION> {{ etablissement.id }}  {{ etablissement.nomEtablissement }}</OPTION>
+                                                                        {% endfor %}
+                                                                    </SELECT>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+
+
+                                                    <button  type="button"  href="#" role="button" data-toggle="modal"
+                                                             data-target="#ajoutVoiture{{ personnel.id }}" class="ActivitesBtn btn btn-info  btn-block btn-lg">Ajouter une voiture</button>
+
+
+
+
+
+
+
+
+                                                    {% for voiture in personnel.lesVoitures %}
+                                                        {# VOITURE PERSONNEL #}
+                                                        <fieldset>
+                                                            <legend> Voiture personnel  </legend>
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <div class="row">
+                                                                        <img class="centerImgSchool" src="{{ asset('image/personnel/ajout_car.png') }}" alt="Symfony!"/>
+                                                                        <div class="alert alert-dismissible alert-warning">
+                                                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                                            <p class="mb-0">Si vous ne saissisez pas l'imamarticule, l'application prendra pas en compte la voiture.</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6">
+                                                                            <label>marque :</label>
+                                                                            <input type="text" class="form-control" name="voiture[marque]" value="{{ voiture.marque }}">
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <label>modele :</label>
+                                                                            <input type="text" class="form-control" name="voiture[modele]" value="{{ voiture.modele }}" >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6">
+                                                                            <label>couleur :</label>
+                                                                            <input type="text" class="form-control" name="voiture[couleur]"  value="{{ voiture.couleur }}">
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <label> badge : </label>
+                                                                            <SELECT name="voiture[badge]" class="form-control" >
+                                                                                <OPTION> {{ voiture.badge }}</OPTION>
+                                                                                <OPTION> oui</OPTION>
+                                                                                <OPTION> non</OPTION>
+                                                                            </SELECT>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-10">
+                                                                        <label>immarticulation :</label>
+                                                                        <input type="text" class="form-control" name="voiture[immarticulation]" value="{{ voiture.immarticulation }}">
+                                                                    </div>
+                                                                </div>
+                                                                <button  type="button"  href="#" role="button" data-toggle="modal"
+                                                                         data-target="#deleteVoiture{{ voiture.id }}" class="ActivitesBtn btn btn-danger  btn-block btn-sm">supprimer le voiture</button>
+
+
+                                                                <!-- MODAL DELETE VOITURE -->
+                                                                <div class="modal fade" id="deleteVoiture{{ voiture.id }}" tabindex="-1">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Suppression de tous les activités</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal">
+                                                                                    <span>&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p>Êtes-vous sûr de vouloir effacer  le voiture   de {{ user.prenom }}
+                                                                                    " ?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer justify-content-center">
+                                                                                <a href="{{ path('personnels_delete_voiture', {'id': voiture.id}) }}">
+                                                                                    <button type="button" class="btn
+                                                                                                                                  btn-outline-success">Supprimer
+                                                                                    </button>
+                                                                                </a>
+                                                                                <button type="button" class="btn btn-outline-danger"
+                                                                                        data-dismiss="modal">Annuler
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- END MODAL DELETE VOITURE -->
+
+
+
+                                                            </div>
+                                                        </fieldset>
+                                                    {% endfor %} {#voiture in personnel.lesVoitures#}
+
+                                                    {# ROLE #}
+                                                    <fieldset>
+                                                        <legend> Rôle </legend>
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="row">
+                                                                    <img class="centerImgSchool " src="{{ asset('image/personnel/work.png') }}" alt="Symfony!"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <label>Fonction :</label>
+                                                                        <SELECT type="text" class="form-control" name="personnel[fonction]">
+                                                                            <OPTION>{{ personnel.fonction }}</OPTION>
+                                                                            <OPTION>AED </OPTION>
+                                                                            <OPTION>CPE </OPTION>
+                                                                            <OPTION>Directeur </OPTION>
+                                                                            <OPTION>Animateur </OPTION>
+                                                                            <OPTION> Professeur</OPTION>
+                                                                            <OPTION>Infirmier </OPTION>
+                                                                            <OPTION> Professeur_doc</OPTION>
+                                                                            <OPTION> ATEE</OPTION>
+                                                                            <OPTION> ATEE_Chef</OPTION>
+                                                                            <OPTION> CRS</OPTION>
+                                                                            <OPTION> Secrétaire</OPTION>
+                                                                        </SELECT>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <label>Cate Xpass:</label>
+                                                                        <input type="text" class="form-control" name="personnel[numCarteXpass]" value="{{ personnel.numCarteXpass }}" >
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="col-lg-4">
+                                                                        <label>Action ir':</label>
+                                                                        <SELECT type="text" class="form-control" name="personnel[actionIR]">
+                                                                            <OPTION>{{ personnel.actionIR }}</OPTION>
+                                                                            <OPTION>oui </OPTION>
+                                                                            <OPTION>non </OPTION>
+
+                                                                        </SELECT>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                        <label>Responsable:</label>
+                                                                        <SELECT type="text" class="form-control" name="personnel[responsable]">
+                                                                            <OPTION>{{ personnel.responsable }}</OPTION>
+                                                                            <OPTION>oui </OPTION>
+                                                                            <OPTION>non </OPTION>
+
+                                                                        </SELECT>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                        <label>TP:</label>
+
+                                                                        <input     type="number"  class="form-control" name="personnel[tp]" value="{{ personnel.tp }}">
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <label>Date Entree:</label>
+                                                                        <input type="text" class="form-control" name="personnel[dateEntree]" value="{{ personnel.dateEntree | date('d-m-Y') }}" >
+                                                                        {#2011-06-05#}
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <label>Date Sortie:</label>
+                                                                        <input type="text" class="form-control" name="personnel[dateSortie]" value="{{ personnel.dateSortie | date('d-m-Y') }}" >
+                                                                        <p> saisisez la date en format "jour/mois/année</p>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="col-lg-10">
+
+                                                                        <div class="specification" id="dynamic-fields_ActiviteList">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-10">
+                                                                                    <br>
+                                                                                    <button  type="button"  href="#" role="button" data-toggle="modal"
+                                                                                             data-target="#deleteActivite{{ personnel.id }}" class="ActivitesBtn btn btn-danger  btn-block btn-sm">supprimer les activites</button>
+                                                                                    <p>Activité :</p>
+                                                                                    <SELECT name="personnelActivite[activite][]" class="form-control" >
+                                                                                        <OPTION>aucune
+                                                                                            {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+
+                                                                                    </SELECT>
+                                                                                    <ul>
+                                                                                        {% for activite in personnel.lesActivites  %}
+                                                                                            <li>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-10">
+                                                                                                        <button    type="button" class="ActivitesBtn btn btn-success  btn-block btn-sm"> {{ activite.nom }}</button>
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </li>
+
+                                                                                            <!-- MODAL DELETE ACTIVITE -->
+                                                                                            <div class="modal fade" id="deleteActivite{{  personnel.id }}" tabindex="-1">
+                                                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                                                    <div class="modal-content">
+                                                                                                        <div class="modal-header">
+                                                                                                            <h5 class="modal-title">Suppression de tous les activités</h5>
+                                                                                                            <button type="button" class="close" data-dismiss="modal">
+                                                                                                                <span>&times;</span>
+                                                                                                            </button>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            <p>Êtes-vous sûr de vouloir supprimer les activités de {{ user.prenom }}
+                                                                                                                " ?</p>
+                                                                                                        </div>
+                                                                                                        <div class="modal-footer justify-content-center">
+                                                                                                            <a href="{{ path('personnels_delete_activite', {'id': personnel.id}) }}">
+                                                                                                                <button type="button" class="btn
+                                                                                                                                  btn-outline-success">Supprimer
+                                                                                                                </button>
+                                                                                                            </a>
+                                                                                                            <button type="button" class="btn btn-outline-danger"
+                                                                                                                    data-dismiss="modal">Annuler
+                                                                                                            </button>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- END MODAL DELETE ACTIVITE -->
+
+
+                                                                                        {% endfor %}  {# activite in personnel.lesActivites#}
+
+                                                                                    </ul>
+                                                                                </div>
+
+
+                                                                                <br>
+                                                                                <div class="col-lg-2">
+                                                                                    <label>Ajout :</label>
+                                                                                    <button type="button" id="add-fields"
+                                                                                            class="btn btn-outline-success"><i
+                                                                                                class="far fa-plus-square"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+
+                                                    {# NIVEAU ETUDES#}
+                                                    <fieldset>
+                                                        <legend> Niviveau Etudes </legend>
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="row">
+                                                                    <img class="centerImgSchool " src="{{ asset('image/personnel/diplome.jpg') }}" alt="Symfony!"/>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="row">
+                                                                    <div class="col-lg-10">
+                                                                        <label>Niveau Etude :</label>
+                                                                        <input type="text" class="form-control" name="personnel[niveauEtude]" value="{{ personnel.niveauEtude }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <label>Haut diplome :</label>
+                                                                        <input type="text" class="form-control" name="personnel[hautDiplome]" value="{{ personnel.hautDiplome }}">
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <label>specialite :</label>
+                                                                        <input type="text" class="form-control" name="personnel[specialite]" value="{{ personnel.specialite }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <label>Formation en cours :</label>
+                                                                        <input type="text" class="form-control" name="personnel[formationEnCours]" value="{{ personnel.formationEnCours }}">
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <label>Droit 200h :</label>
+                                                                        <SELECT type="text" class="form-control" name="personnel[droit200h]">
+                                                                            <OPTION>{{ personnel.droit200h }}</OPTION>
+                                                                            <OPTION>oui </OPTION>
+                                                                            <OPTION>non </OPTION>
+                                                                        </SELECT>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+
+
+
+
+                                                {% endfor %} {#personnel in user.lesPersonnels#}
+
+
+
+
+                                                <input type="hidden" name="personnel[valid]" value="OK">
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="submit" class="btn btn-outline-success">Modifier
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-dismiss="modal">Annuler
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <!-- Modal -->
+                                        {% for personnel  in user.lesPersonnels %}
+                                        <div class="modal fade" id="ajoutVoiture{{ personnel.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form method="post" action="{{ path('personnels_voiture_ajouter', {'id': personnel.id}) }}">
+
+                                                        <div class="modal-body">
+                                                            <fieldset>
+                                                                <legend> Voiture personnel  </legend>
+                                                                <div class="row">
+                                                                    <div class="col-lg-4">
+                                                                        <div class="row">
+                                                                            <img class="centerImgSchool" src="{{ asset('image/personnel/ajout_car.png') }}" alt="Symfony!"/>
+                                                                            <div class="alert alert-dismissible alert-warning">
+                                                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                                                <p class="mb-0">Si vous ne saissisez pas l'imamarticule, l'application prendra pas en compte la voiture.</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+                                                                    </div>
+                                                                    <div class="col-lg-8">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <label>marque :</label>
+                                                                                <input type="text" class="form-control" name="voiture[marque]">
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <label>modele :</label>
+                                                                                <input type="text" class="form-control" name="voiture[modele]" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <label>couleur :</label>
+                                                                                <input type="text" class="form-control" name="voiture[couleur]" >
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <label> badge : </label>
+                                                                                <SELECT name="voiture[badge]" class="form-control" >
+                                                                                    <OPTION></OPTION>
+                                                                                    <OPTION> oui</OPTION>
+                                                                                    <OPTION> non</OPTION>
+                                                                                </SELECT>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-10">
+                                                                            <label>immarticulation :</label>
+                                                                            <input type="text" class="form-control" name="voiture[immarticulation]" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                        <input type="hidden" name="voiture[valid]" value="OK">
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endblock editPersonnel  %} {# END BLOCK AJOUT PERSONNEL #}
+
+
+                    {% endfor %}    {# user in users#}
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% block ajoutPersonnel %}
+    {{  form_start(personnelForm) }}
+
+        <div class="modal fade ajoutPersonnel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">ajout etablissement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        {#  INFORMATION PERSONNEL #}
+                        <fieldset>
+                            <legend>Information Personnel </legend>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="row">
+                                            <img class="centerImg" src="{{ asset('image/personnel/ajout_person.jpg') }}" alt="Symfony!"/>
+                                            </div>
+                                            <br>
+                                            <div class="row userName">
+
+                                                    Username     : <p id="usernameJS1"></p>.<p id="usernameJS2"></p>
+                                                    Mot de passe : 123456789
+
+                                            </div>
+                                        </div>
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label>Prénom :</label>
+                                                <input id="input1"  type="text" class="form-control" name="user[prenom]" required>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Nom de famille :</label>
+                                                <input id="input2" type="text" class="form-control" name="user[nom]" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label>Email :</label>
+                                                <input type="email" class="form-control" name="user[email]" required>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                {{ form_row(personnelForm.tel,{'label': 'Téléphone',  'type':"number", 'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                        </fieldset>
+
+                        {# ORGANISME LIE #}
+                        <fieldset>
+                            <legend> organisme lié </legend>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <img class="centerImgSchool " src="{{ asset('image/personnel/ajout_school.png') }}" alt="Symfony!"/>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="col-lg-10">
+                                        {{ form_row(personnelForm.organisme, {'label': 'Organisme','attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                    <div class="col-lg-10">
+                                        {{ form_row(personnelForm.etablissement,    {'label': 'Etablissement','attr': {'class': 'form-control'}})  }}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        {# VOITURE PERSONNEL #}
+                        <fieldset>
+                            <legend> Voiture personnel  </legend>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <img class="centerImgSchool" src="{{ asset('image/personnel/ajout_car.png') }}" alt="Symfony!"/>
+                                        <div class="alert alert-dismissible alert-warning">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <p class="mb-0">Si vous ne saissisez pas l'imamarticule, l'application prendra pas en compte la voiture.</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>marque :</label>
+                                            <input type="text" class="form-control" name="voiture[marque]">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>modele :</label>
+                                            <input type="text" class="form-control" name="voiture[modele]" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>couleur :</label>
+                                            <input type="text" class="form-control" name="voiture[couleur]" >
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label> badge : </label>
+                                            <SELECT name="voiture[badge]" class="form-control" >
+                                                <OPTION></OPTION>
+                                                <OPTION> oui</OPTION>
+                                                <OPTION> non</OPTION>
+                                            </SELECT>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <label>immarticulation :</label>
+                                        <input type="text" class="form-control" name="voiture[immarticulation]" >
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        {# ROLE #}
+                        <fieldset>
+                            <legend> Rôle </legend>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <img class="centerImgSchool " src="{{ asset('image/personnel/work.png') }}" alt="Symfony!"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.fonction,         {'label': 'Fonction','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.numCarteXpass,    {'label': 'Cate Xpass','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            {{ form_row(personnelForm.actionIR,         {'label': 'Action ir','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col-lg-4">
+                                            {{ form_row(personnelForm.responsable,      {'label': 'Responsable','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col-lg-4">
+                                            {{ form_row(personnelForm.tp,               {'label': 'TP','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.dateEntree,       {'label': 'Date Entree', 'type': 'text', 'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.dateSortie,       {'label': 'Date Sortie','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+
+                                            <div class="specification" id="dynamic-fields_ActiviteList">
+                                                <div class="row">
+                                                    <div class="col-lg-10">
+                                                        <br>
+                                                        <p>Activité :</p>
+                                                        <SELECT name="personnelActivite[activite][]" class="form-control" >
+                                                            <OPTION>aucune
+                                                            {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+
+                                                        </SELECT>
+                                                    </div>
+
+
+                                                    <br>
+                                                    <div class="col-lg-2">
+                                                        <label>Ajout :</label>
+                                                        <button type="button" id="add-fields"
+                                                                class="btn btn-outline-success"><i
+                                                                    class="far fa-plus-square"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        {# NIVEAU ETUDES#}
+                        <fieldset>
+                            <legend> Niviveau Etudes </legend>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <img class="centerImgSchool " src="{{ asset('image/personnel/diplome.jpg') }}" alt="Symfony!"/>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            {{ form_row(personnelForm.niveauEtude,      {'label': 'Niveau Etude','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.hautDiplome,      {'label': 'Haut diplome','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.specialite,       {'label': 'Specialité','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.formationEnCours, {'label': 'Formation en cours', 'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            {{ form_row(personnelForm.droit200h,        {'label': 'Droit 200h','attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+
+
+
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annuler
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    {{ form_end(personnelForm) }}
+
+
+
+
+
+
+{% endblock ajoutPersonnel %} {# END BLOCK AJOUT PERSONNEL #}
+
+
+{# ============ CODE JAVA SCRIPTE ==============#}
+
+{# ############ CODE POUR ATTRIBUER ACTIVITE ############# #}
+    <script>
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add-field').click(function () {
+                i++;
+                $('#dynamic-fields_ActiviteList').append('' +
+                    '<div class="row" id="row' + i + '">' +
+                    '<div class="col">' +
+                    '<SELECT name="personnelActivite[activite][]" class="form-control" size="1">' +
+                    '<OPTION>  {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}' +
+                    '</SELECT>' +
+                    '</div>' +
+                    '<label>Ajout acitivite :</label>' +
+                    '<br/>' +
+                    '<button type="button" name="remove" id="' + i + '" class="btn btn-outline-danger remove-field"><i class="far fa-minus-square"></i></button>' +
+                    '</div>' +
+                    '<br/>' +
+                    '</div>');
+            });
+            $(document).on('click', '.remove-field', function () {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
+
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add-fields').click(function () {
+                i++;
+                $('#dynamic-fields_ActiviteList').append('' +
+                    '<div class="row" id="row' + i + '">' +
+                    '<div class="col">' +
+                    '<SELECT name="personnelActivite[activite][]" class="form-control" size="1">' +
+                    '<OPTION>  {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}' +
+                    '</SELECT>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Ajout Activite :</label>' +
+                    '<br/>' +
+                    '<button type="button" name="remove" id="' + i + '" class="btn btn-outline-danger remove-field"><i class="far fa-minus-square"></i></button>' +
+                    '</div>' +
+                    '<br/>' +
+                    '</div>');
+            });
+            $(document).on('click', '.remove-field', function () {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
+
+
+
+        // script pour username
+
+        $('#input1').on('input',function(e){
+            $("#usernameJS1").html($(this).val());
+        });
+
+        $('#input2').on('input',function(e){
+            $("#usernameJS2").html($(this).val());
+        });
+
+    </script>
+
+{% endblock %}
