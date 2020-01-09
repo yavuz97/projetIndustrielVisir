@@ -1,0 +1,46 @@
+
+
+.colMenuYav{
+
+    background-color: #e6e5e5;
+    border-style: solid;
+    border-right-width: 3px;
+    border-color: #c1c3c5;
+    margin-bottom: -20pc;
+}
+
+.menuButtonYav{
+    margin-top: 20%;
+}
+
+.btnYav {
+    border-radius: 40px;
+    margin: 39px 0 0 0;
+}
+
+.photoMenuSequence{
+    width: auto;
+    height: auto;
+    margin: -17px 0px -23px -22px;
+}
+
+.imgAjoutSequence{
+    margin-bottom: 5%;
+    margin-top: 2%;
+    margin-left: 11%;
+    height: 12pc;
+}
+
+.labelYav{
+    margin-left: 5pc;
+    margin-top: 18px;
+}
+
+.cardYav{
+    margin: 24px 42px 77px -110px;
+}
+
+.btnDate{
+    margin: 16px 0 8px 12pc;
+}
+

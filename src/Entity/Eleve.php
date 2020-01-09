@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -125,6 +127,11 @@ class Eleve
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $RLprioritaire;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $respLegal1;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -461,9 +468,54 @@ class Eleve
      */
     private $presenceCouponImage;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etablissement", inversedBy="lesEleves")
+     */
+    private $etablissement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="lesEleves")
+     */
+    private $personnel;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SuivieActivite", mappedBy="eleve", orphanRemoval=true)
+     */
+    private $lesSuivieActivites;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HistoriqueEleve", mappedBy="eleve", orphanRemoval=true)
+     */
+    private $lesHistoriqueEleve;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $anneeScolaire;
+
+ 
+
+    public function __construct()
+    {
+        $this->lesSuivieActivites = new ArrayCollection();
+        $this->lesHistoriqueEleve = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getAnneeScolaire(): ?string
+    {
+        return $this->anneeScolaire;
+    }
+
+    public function setAnneeScolaire(?string $anneeScolaire): self
+    {
+        $this->anneeScolaire = $anneeScolaire;
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -714,6 +766,18 @@ class Eleve
     public function setParticularite(?string $particularite): self
     {
         $this->particularite = $particularite;
+
+        return $this;
+    }
+
+    public function getRespLegal1(): ?string
+    {
+        return $this->respLegal1;
+    }
+
+    public function setRespLegal1(string $respLegal1): self
+    {
+        $this->respLegal1 = $respLegal1;
 
         return $this;
     }
@@ -1533,4 +1597,98 @@ class Eleve
 
         return $this;
     }
+
+    public function getEtablissement(): ?Etablissement
+    {
+        return $this->etablissement;
+    }
+
+    public function setEtablissement(?Etablissement $etablissement): self
+    {
+        $this->etablissement = $etablissement;
+
+        return $this;
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): self
+    {
+        $this->personnel = $personnel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SuivieActivite[]
+     */
+    public function getLesSuivieActivites(): Collection
+    {
+        return $this->lesSuivieActivites;
+    }
+
+    public function addLesSuivieActivite(SuivieActivite $lesSuivieActivite): self
+    {
+        if (!$this->lesSuivieActivites->contains($lesSuivieActivite)) {
+            $this->lesSuivieActivites[] = $lesSuivieActivite;
+            $lesSuivieActivite->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesSuivieActivite(SuivieActivite $lesSuivieActivite): self
+    {
+        if ($this->lesSuivieActivites->contains($lesSuivieActivite)) {
+            $this->lesSuivieActivites->removeElement($lesSuivieActivite);
+            // set the owning side to null (unless already changed)
+            if ($lesSuivieActivite->getEleve() === $this) {
+                $lesSuivieActivite->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HistoriqueEleve[]
+     */
+    public function getLesHistoriqueEleve(): Collection
+    {
+        return $this->lesHistoriqueEleve;
+    }
+
+    public function addLesHistoriqueEleve(HistoriqueEleve $lesHistoriqueEleve): self
+    {
+        if (!$this->lesHistoriqueEleve->contains($lesHistoriqueEleve)) {
+            $this->lesHistoriqueEleve[] = $lesHistoriqueEleve;
+            $lesHistoriqueEleve->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesHistoriqueEleve(HistoriqueEleve $lesHistoriqueEleve): self
+    {
+        if ($this->lesHistoriqueEleve->contains($lesHistoriqueEleve)) {
+            $this->lesHistoriqueEleve->removeElement($lesHistoriqueEleve);
+            // set the owning side to null (unless already changed)
+            if ($lesHistoriqueEleve->getEleve() === $this) {
+                $lesHistoriqueEleve->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
 }

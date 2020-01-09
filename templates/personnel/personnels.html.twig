@@ -5,6 +5,7 @@
 {% block body %}
 
     <link href="{{ asset('css/personnel.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/littleTable.css') }}" rel="stylesheet"/>
 
     {# LIST PERSONNEL #}
     <div class="row" xmlns="http://www.w3.org/1999/html">
@@ -16,8 +17,12 @@
                     <a class="list-group-item list-group-item-action active list-group-item-success" id="list-home-list" data-toggle="modal"  data-target=".ajoutPersonnel" href="#list-home" role="tab" aria-controls="home">AJOUTER UN PERSONNEL</a>
                     <a class="list-group-item list-group-item-action list-group-item-info" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">personnes avec voiture</a>
                     <a class="list-group-item list-group-item-action list-group-item-warning" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">liste de personnel</a>
+                    <a class="list-group-item list-group-item-action list-group-item-dark" href="{{ path('PersonnelQuiRentre') }}" >liste pour les CRS </a>
                     {% for user in users %}
-                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#{{ user.nom|replace({' ': ''}) }}" role="tab" aria-controls="profile">{{ user.prenom}} {{ user.nom }}</a>
+                         {% for person in user.lesPersonnels %}
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#{{ user.nom|replace({' ': ''}) }}" role="tab" aria-controls="profile">
+                            {{ person.user.prenom}} {{ person.user.nom }}</a>
+                            {% endfor %}
                     {% endfor %}
 
                 </div>
@@ -88,7 +93,9 @@
 
                         <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
 
-                            <table class="table table-borderless">
+
+
+                            <table class="table table-hover table-dark ">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -146,93 +153,82 @@
 
                         <div class="tab-pane fade" id="{{ user.nom|replace({' ': ''}) }}" role="tabpanel" aria-labelledby="list-profile-list">
 
-                             {#  INFORMATION PERSONNEL #}
+
+
+
                                  <fieldset>
-                                     <legend>Information Personnel </legend>
+                                     <legend> Information utilisateur </legend>
+
                                      <div class="row">
-                                         <div class="col-lg-4">
-                                             <div class="row">
-                                                 <img class="centerImg" src="{{ asset('image/personnel/ajout_person.jpg') }}" alt="Symfony!"/>
-                                             </div>
-                                             <br>
-                                             <div class="row userName">
+                                            <div class="col-md-4">
+                                                <img class="centerImg" src="{{ asset('image/personnel/ajout_person.jpg') }}" alt="Symfony!"/>
+                                                <a class="btn btn-danger  float-right" href="#" role="button" data-toggle="modal"
+                                                   data-target="#deleteEtablissement{{ user.id }}">Supprimmer </a>
 
-                                                 <p>  Username     : {{ user.prenom }}.{{ user.nom }}</p>
-                                                 <p> Mot de passe defaut par défaut : 123456789 </p>
 
-                                             </div>
-                                         </div>
-                                         <div class="col-lg-8">
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Prenom </h4>  <p class="fontCustomP"> {{ user.prenom }}</p>
-                                                 </div>
-                                                 <div class="col-lg-6">
-                                                     <h4>Nom</h4>  <p class="fontCustomP"> {{ user.nom }}</p>
-                                                 </div>
+                                                <a class="btn btn-warning " href="#" role="button" data-toggle="modal"
+                                                   data-target="#editEtablissement{{ user.id }}">Modifier </a>
+                                            </div>
 
-                                             </div>
 
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Email</h4>  <p class="fontCustomP"> <p class="fontCustomP"> {{ user.email }}</p>
-                                                 </div>
-                                             </div>
-                                             {#  MODAL SUPPRIMER #}
-                                             {% for personnel in user.lesPersonnels  %}
-                                                 <div class="row">
-                                                     <div class="col-lg-6">
-                                                             <h4>Téléphone</h4>  <p class="fontCustomP"> {{ personnel.tel }}</p>
+
+
+                                         <!-- MODAL DELETE PERSONNEL -->
+                                         <div class="modal fade" id="deleteEtablissement{{ user.id }}" tabindex="-1">
+                                             <div class="modal-dialog modal-dialog-centered">
+                                                 <div class="modal-content">
+                                                     <div class="modal-header">
+                                                         <h5 class="modal-title">Suppression d'un etablissement</h5>
+                                                         <button type="button" class="close" data-dismiss="modal">
+                                                             <span>&times;</span>
+                                                         </button>
                                                      </div>
-                                                 </div>
-                                             {% endfor %}
-                                             <a class="btn btn-danger btn-lg float-right" href="#" role="button" data-toggle="modal"
-                                                data-target="#deleteEtablissement{{ user.id }}">Supprimmer </a>
-                                             <a class="btn btn-warning btn-lg" href="#" role="button" data-toggle="modal"
-                                                data-target="#editEtablissement{{ user.id }}">Modifier </a>
-
-
-
-
-
-                                             <!-- MODAL DELETE ETABLISSEMENT -->
-                                             <div class="modal fade" id="deleteEtablissement{{ user.id }}" tabindex="-1">
-                                                 <div class="modal-dialog modal-dialog-centered">
-                                                     <div class="modal-content">
-                                                         <div class="modal-header">
-                                                             <h5 class="modal-title">Suppression d'une personnel</h5>
-                                                             <button type="button" class="close" data-dismiss="modal">
-                                                                 <span>&times;</span>
+                                                     <div class="modal-body">
+                                                         <p>Êtes-vous sûr de vouloir supprimer utilisateur "{{ user.nom }}
+                                                             " ?</p>
+                                                     </div>
+                                                     <div class="modal-footer justify-content-center">
+                                                         <a href="{{ path('personnels_delete_personnel', {'id': user.id}) }}">
+                                                             <button type="button" class="btn
+                                                        btn-outline-success">Supprimer
                                                              </button>
-                                                         </div>
-                                                         <div class="modal-body">
-                                                             <p>Êtes-vous sûr de vouloir supprimer person "{{ user.prenom }}
-                                                                 " ?</p>
-                                                         </div>
-                                                         <div class="modal-footer justify-content-center">
-                                                             <a href="{{ path('personnels_delete_personnel', {'id': user.id}) }}">
-                                                                 <button type="button" class="btn
-                                                                btn-outline-success">Supprimer
-                                                                 </button>
-                                                             </a>
-                                                             <button type="button" class="btn btn-outline-danger"
-                                                                     data-dismiss="modal">Annuler
-                                                             </button>
-                                                         </div>
+                                                         </a>
+                                                         <button type="button" class="btn btn-outline-danger"
+                                                                 data-dismiss="modal">Annuler
+                                                         </button>
                                                      </div>
                                                  </div>
                                              </div>
-                                             <!-- END MODAL DELETE ETABLISSEMENT -->
-
-
-
-
                                          </div>
-                                     </div>
+                                         <!-- END MODAL DELETE PERSONNEL -->
+                                            <div class="col-md-8">
+
+                                                <ul>
+                                                    <li class="list-item">
+                                                         <button class="btn ">Prenom :</button> {{ user.prenom }}
+                                                    </li>
+                                                    <li class="list-item">
+                                                         <button class="btn "> Nom : </button> {{ user.nom }}
+                                                    </li>
+                                                    <li class="list-item">
+                                                          <button class="btn "> Email :</button>  {{ user.email }}
+                                                    </li>
+                                                    <li class="list-item">
+                                                        {% for personnel in user.lesPersonnels  %}
+                                                             <button class="btn "> Telephone :  </button> {{ personnel.tel }}
+                                                        {% endfor %}
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
                                  </fieldset>
 
 
-                             {% if  user.lesPersonnels is empty  %}
+
+
+
+                            {% if  user.lesPersonnels is empty  %}
                                  <div class="alert alert-dismissible alert-info">
                                      <button type="button" class="close" data-dismiss="alert">&times;</button>
                                      <h4 class="alert-heading">Info</h4>
@@ -241,25 +237,28 @@
                              {% endif %}
 
 
+
+
+
                              {% for personnel in user.lesPersonnels  %}
                              {# ORGANISME LIE #}
                                  <fieldset>
                                      <legend> organisme lié </legend>
+
                                      <div class="row">
-                                         <div class="col-lg-4">
-                                             <div class="row">
-                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/ajout_school.png') }}" alt="Symfony!"/>
-                                             </div>
-                                             <br>
+                                         <div class="col-md-4">
+                                             <img class="centerImgSchool " src="{{ asset('image/personnel/ajout_school.png') }}" alt="Symfony!"/>
                                          </div>
-                                         <div class="col-lg-8">
-                                             <div class="col-lg-10">
-                                                 <h4>Organisme </h4>
-                                                 <p class="fontCustomP"> {{ personnel.organisme }}</p>
-                                             </div>
-                                             <div class="col-lg-10">
-                                                 <h4>Organisme </h4>  <p class="fontCustomP">{{ personnel.etablissement.nomEtablissement }}</p>
-                                             </div>
+                                         <div class="col-md-8">
+
+                                             <ul>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Organisme :</button> {{ personnel.organisme }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> Etablissement : </button> {{ personnel.etablissement.nomEtablissement }}
+                                                 </li>
+                                             </ul>
                                          </div>
                                      </div>
                                  </fieldset>
@@ -287,158 +286,125 @@
                                  {% endif %}
                                  {% for voiture in personnel.lesVoitures %}
 
-                                         <fieldset>
-                                             <legend> Voiture personnel  </legend>
-                                             <div class="row">
-                                                 <div class="col-lg-4">
-                                                     <div class="row">
-                                                         <img class="centerImgSchool" src="{{ asset('image/personnel/ajout_car.png') }}" alt="Symfony!"/>
-                                                     </div>
-                                                     <br>
-                                                 </div>
-                                                 <div class="col-lg-8">
-                                                         <div class="row">
-                                                             <div class="col-lg-6">
-                                                                 <h4>Marque </h4>
-                                                                 <p class="fontCustomP"> {{ voiture.marque }}</p>
-                                                             </div>
-                                                             <div class="col-lg-6">
-                                                                 <h4>Modele </h4>
-                                                                 <p class="fontCustomP"> {{ voiture.modele }}</p>
-                                                             </div>
-                                                         </div>
-                                                         <div class="row">
-                                                             <div class="col-lg-6">
-                                                                 <h4>Couleur </h4>
-                                                                 <button type="button" class=" btn btn-primary btn-sm">{{ voiture.couleur }}</button>
-                                                                 <br>
-                                                             </div>
-                                                             <div class="col-lg-6">
-                                                                 <h4>Badge </h4>
-                                                                 <p class="fontCustomP"> {{ voiture.badge }}</p>
-                                                             </div>
-                                                         </div>
-                                                        <br>
-                                                         <div class="col-lg-10">
-                                                             <h4>Immarticulation </h4>
-                                                             <p class="fontCustomP"> {{ voiture.immarticulation }}</p>
-                                                         </div>
-                                                 </div>
+
+
+                                     <fieldset>
+                                         <legend> Voiture personnel  </legend>
+
+                                         <div class="row">
+                                             <div class="col-md-4">
+                                                 <img class="centerImgSchool" src="{{ asset('image/personnel/ajout_car.png') }}" alt="Symfony!"/>
                                              </div>
-                                         </fieldset>
+                                             <div class="col-md-8">
+
+                                                 <ul>
+                                                     <li class="list-item">
+                                                         <button class="btn ">Marque :</button> {{ voiture.marque }}
+                                                     </li>
+                                                     <li class="list-item">
+                                                         <button class="btn "> Modèle : </button> {{ voiture.modele }}
+                                                     </li>
+                                                     <li class="list-item">
+                                                         <button class="btn "> Couleur : </button> {{ voiture.couleur }}
+                                                     </li>
+                                                     <li class="list-item">
+                                                         <button class="btn "> Badge : </button> {{ voiture.badge }}
+                                                     </li>
+                                                     <li class="list-item">
+                                                         <button class="btn "> Immarticulation  : </button> {{ voiture.immarticulation }}
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                     </fieldset>
+
+
                                  {% endfor %}
+
 
 
                                  {# ROLE #}
                                  <fieldset>
                                      <legend> Rôle </legend>
+
                                      <div class="row">
-                                         <div class="col-lg-4">
-                                             <div class="row">
-                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/work.png') }}" alt="Symfony!"/>
-                                             </div>
+                                         <div class="col-md-4">
+                                             <img class="centerImgSchool " src="{{ asset('image/personnel/work.png') }}" alt="Symfony!"/>
                                          </div>
-                                         <div class="col-lg-8">
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Fonction </h4>
-                                                     <p class="fontCustomP"> {{ personnel.fonction }}</p>
-                                                 </div>
-                                             </div>
-                                             <br>
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Cate Xpass  </h4>
-                                                     <button type="button" class=" btn btn-info btn-sm"style="left: auto">{{ personnel.numCarteXpass }}</button>
-                                                 </div>
-                                                 <div class="col-lg-6" style="left: auto">
-                                                     <h4 style="margin: 0 0 -0 -94px">TP </h4>
-                                                     <button type="button" class="  btn btn-info btn-sm"style="margin: 0 0 -0 -94px">{{  personnel.tp  }}</button>
-                                                 </div>
-                                             </div>
-                                             <br>
-                                             <div class="row">
-                                                 <div class="col-lg-4">
-                                                     <h4 class="centerB">Action ir </h4>
-                                                     {% if personnel.actionIR  ==  "non" %}
-                                                     <button type="button" class="  btn btn-danger btn-sm" style="left: auto">{{ personnel.actionIR }}</button>
+                                         <div class="col-md-8">
+
+                                             <ul>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Fonction :</button> {{ personnel.numCarteXpass }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> Cate Xpass   : </button> {{ personnel.numCarteXpass }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> TP : </button> {{  personnel.tp  }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> Action ir  : </button>  {% if personnel.actionIR  ==  "non" %}
+                                                         <button type="button" class="  btn btn-danger btn-sm" style="left: auto">{{ personnel.actionIR }}</button>
                                                      {% else %}
-                                                     <button type="button" class="  btn btn-success btn-sm"style="left: auto">{{ personnel.actionIR }}</button>
-                                                     <br>
+                                                         <button type="button" class="  btn btn-success btn-sm"style="left: auto">{{ personnel.actionIR }}</button>
+                                                         <br>
                                                      {% endif %}
-                                                 </div>
-                                                 <div class="col-lg-4">
-                                                     <h4 class="centerB">Responsable </h4>
-                                                     {% if personnel.responsable  ==  "non" %}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> Responsable  : </button> {% if personnel.responsable  ==  "non" %}
                                                          <button type="button" class="  btn btn-danger btn-sm" style="left: auto">{{ personnel.responsable }} </button>
                                                      {% else %}
                                                          <button type="button" class="  btn btn-success btn-sm" style="left: auto">{{ personnel.responsable }}</button>
                                                          <br>
                                                      {% endif %}
-                                                 </div>
-
-                                             </div>
-                                             <br>
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Date Entree </h4>
-                                                     <p class="fontCustomP"> {{ personnel.dateEntree |date("m/d/Y") }}</p>
-                                                 </div>
-                                                 <div class="col-lg-6">
-                                                     <h4>Date Sortie </h4>
-                                                     <p class="fontCustomP"> {{ personnel.dateSortie |date("m/d/Y") }}</p>
-                                                 </div>
-                                             </div>
-                                             <br>
-
-
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> Date Entree  : </button> {{ personnel.dateEntree |date("m/d/Y") }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Date Sortie </button> {{ personnel.dateSortie |date("m/d/Y") }}
+                                                 </li>
+                                             </ul>
                                          </div>
                                      </div>
                                  </fieldset>
+
+
+
 
 
 
                                  {# NIVEAU ETUDES#}
                                  <fieldset>
                                      <legend> Niviveau Etudes </legend>
+
                                      <div class="row">
-                                         <div class="col-lg-4">
-                                             <div class="row">
-                                                 <img class="centerImgSchool " src="{{ asset('image/personnel/diplome.jpg') }}" alt="Symfony!"/>
-                                             </div>
-                                             <br>
+                                         <div class="col-md-4">
+                                             <img class="centerImgSchool " src="{{ asset('image/personnel/diplome.jpg') }}" alt="Symfony!"/>
                                          </div>
-                                         <div class="col-lg-8">
-                                             <div class="row">
-                                                 <div class="col-lg-10">
-                                                     <h4>Niveau Etude </h4>
-                                                     <p class="fontCustomP"> {{ personnel.niveauEtude }}</p>
-                                                 </div>
-                                             </div>
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Haut diplome </h4>
-                                                     <p class="fontCustomP"> {{ personnel.hautDiplome }}</p>
-                                                 </div>
-                                                 <div class="col-lg-6">
-                                                     <h4>Specialité </h4>
-                                                     <p class="fontCustomP"> {{ personnel.specialite }}</p>
-                                                 </div>
-                                             </div>
-                                             <div class="row">
-                                                 <div class="col-lg-6">
-                                                     <h4>Formation en cours </h4>
-                                                     <p class="fontCustomP"> {{ personnel.formationEnCours }}</p>
-                                                 </div>
-                                                 <div class="col-lg-6">
-                                                     <h4>Droit 200h</h4>
-                                                     <p class="fontCustomP"> {{ personnel.droit200h }}</p>
-                                                 </div>
-                                             </div>
+                                         <div class="col-md-8">
+
+                                             <ul>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Niveau Etude  :</button> {{ personnel.niveauEtude }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn "> Haut diplome  : </button> {{ personnel.hautDiplome }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Specialité : </button> {{ personnel.specialite }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Formation en cours  :</button> {{ personnel.formationEnCours }}
+                                                 </li>
+                                                 <li class="list-item">
+                                                     <button class="btn ">Droit 200h :</button> {{ personnel.droit200h }}
+                                                 </li>
+                                             </ul>
                                          </div>
                                      </div>
                                  </fieldset>
-
 
 
                                  <fieldset>

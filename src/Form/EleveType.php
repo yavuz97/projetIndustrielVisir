@@ -3,17 +3,34 @@
 namespace App\Form;
 
 use App\Entity\Eleve;
+use App\Entity\Etablissement;
+use App\Entity\Personnel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 
 class EleveType extends AbstractType
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('personnel', EntityType::class,[
+                'class' => Personnel::class,
+
+                'choice_label' => 'user.nom'
+            ])
+            ->add('etablissement', EntityType::class,[
+                'class' => Etablissement::class,
+                'choice_label' => 'nomEtablissement'
+            ])
             ->add('nom')
             ->add('prenom')
             ->add('sexe', ChoiceType::class,
@@ -23,6 +40,7 @@ class EleveType extends AbstractType
                         'H' => 'H',
                         'F' => 'F'
                     )))
+            ->add('anneeScolaire')
             ->add('dateNaiss')
             ->add('etabOrigine')
             ->add('classOrigine')
@@ -62,6 +80,7 @@ class EleveType extends AbstractType
             ->add('suivieScolaire')
             ->add('particularite')
             ->add('RLprioritaire')
+            ->add('respLegal1')
             ->add('lienR1', ChoiceType::class,
                 array(
                     'choices' => array(

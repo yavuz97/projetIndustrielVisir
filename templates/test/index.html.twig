@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+    {% block body %}
+
+<div class="container">
+    {{
+    render(
+        controller('App\\Controller\\TestController::searchBar')
+    )
+    }}
+
+</div>
+
+
+<script type="text/javascript" src="{{ asset('js/autoComplete/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/autoComplete/bloodhound.jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/autoComplete/typeahead.jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        var local = new Bloodhound(
+            {
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+
+                remote: {
+                    url: "{{ path('handle_search') }}/%QUERY%",
+                    wildcard: '%QUERY%',
+                    filter: function (local)
+                    {
+                        return $.map(local, function (local)
+                        {
+                            return {
+                                local_id: local.id,
+                                local_libelle: local.libelle,
+                            }
+                        })
+                    }
+                }
+            })
+
+        local.initialize();
+
+        $('#form_query').typeahead(
+            {
+                hint: true
+            },
+            {
+                name: 'local',
+                source: local.ttAdapter(),
+                display: 'local_libelle',
+                templates: {
+                    suggestion: function (data)
+                    {
+                        return `
+                                <a href='{{ path('city_page') }}/`+data.local_id+`'>
+                                    <strong>`+data.local_id+`</strong>
+                                    <span>`+data.local_libelle+`</span>
+                                </div>
+                            `
+                    },
+                    footer: function (query)
+                    {
+                        return '<div class="text-center">More results about: '+ query.query +'</div>'
+                    }
+                }
+            })
+
+    })
+</script>
+
+{% endblock %}

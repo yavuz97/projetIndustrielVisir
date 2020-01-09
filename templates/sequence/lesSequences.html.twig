@@ -1,0 +1,344 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <link href="{{ asset('css/lesSequences.css') }}" rel="stylesheet"/>
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12 ">
+                <div class="row">
+                    <div class="col-md-2 colMenuYav">
+                        <img src="{{ asset('image/sequence/menu.png') }}" class="photoMenuSequence">
+                        <div class="menuButtonYav">
+
+                            <form method="post" action="{{ path('lesSequences' ) }}" >
+                            <button type="submit" class="btn btn-block btn-outline-primary btnYav">
+                                Aujourd'hui
+                            </button>
+                            </form>
+
+                            <form method="post" action="{{ path('lesSequences' ) }}" >
+
+
+                                <input type="hidden" name="dateAvenir[valid]" value="OK">
+
+                                <button type="submit" class="btn btn-block btn-outline-primary btnYav">
+                                    A venir
+                                </button>
+                            </form>
+
+                            <form method="post" action="{{ path('lesSequences' ) }}" >
+
+
+                                <input type="hidden" name="datePassee[valid]" value="OK">
+
+                                <button type="submit" class="btn btn-block btn-outline-primary btnYav">
+                                    Passée
+                                </button>
+                            </form>
+
+
+                            <form method="post" action="{{ path('lesSequences' ) }}" >
+
+
+                                <input type="hidden" name="dateTout[valid]" value="OK">
+
+                                <button type="submit" class="btn btn-block btn-outline-primary btnYav">
+                                    Tout
+                                </button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-md-12 labelYav">
+                                    <span class="badge badge-success">Ajouter une sequence</span>
+                                </div>
+                                <img src="{{ asset('image/sequence/ajoutSequence.jpg') }}" class="imgAjoutSequence" data-toggle="modal" data-target="#formUser">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card cardYav">
+                                    <h5 class="card-header">
+                                        Recherche les sequences pour une date
+                                    </h5>
+                                    <div class="card-body">
+                                        <form method="post" action="{{ path('lesSequences' ) }}" >
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label>Date 1 :</label>
+                                                    <input type="date" class="form-control" name="deuxDate[dateUn]"  placeholder="dd-mm-yyyy">
+                                                </div>
+
+                                                <div class="col">
+                                                    <label>Date 2 :</label>
+                                                    <input type="date" class="form-control" name="deuxDate[dateDeux]"  placeholder="dd-mm-yyyy">
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" name="deuxDate[valid]" value="OK">
+                                            <button type="submit" class="btn btn-outline-success btnDate">choisir les dates</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        id
+                                    </th>
+                                    <th>
+                                        activite
+                                    </th>
+                                    <th>
+                                        personnel
+                                    </th>
+                                    <th>
+                                        salle
+                                    </th>
+                                    <th>
+                                        heure debut
+                                    </th>
+                                    <th>
+                                        heure fin
+                                    </th>
+                                    <th>
+                                        date
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% set foo = 1 %}
+                                {% for sequence in lesSequences %}
+                                    {% if sequence.date|date('Y-m-d') >=  date1|date('Y-m-d')  and   sequence.date|date('Y-m-d') <=  date2|date('Y-m-d') %}
+
+                                        {% set foo = foo + 1%}
+
+                                        {% if foo is even  %}
+                                            <tr>
+                                                <td><a  href = "{{path('showSequence', {'id': sequence.id})}}"> {{ sequence.id }} </a></td>
+                                                <td>{{ sequence.activite.nom }}</td>
+                                                <td>{{ sequence.personnel.user.nom }}</td>
+                                                <td>{{ sequence.salle}}</td>
+                                                <td>{{ sequence.heureDebut|date("g:ia")}}</td>
+                                                <td>{{ sequence.heureFin|date("g:ia")}}</td>
+                                                <td>{{ sequence.date|date ('d/m/y') }}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-warning" data-toggle="modal"
+                                                            data-target="#editSequence{{ sequence.id }}"><i class="far fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                                            data-target="#deleteSequence{{ sequence.id }}"><i class="far fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr class="table-success">
+                                                <td><a  href = "{{path('showSequence', {'id': sequence.id})}}"> {{ sequence.id }} </a></td>
+                                                <td>{{ sequence.activite.nom }}</td>
+                                                <td>{{ sequence.personnel.user.nom }}</td>
+                                                <td>{{ sequence.salle}}</td>
+                                                <td>{{ sequence.heureDebut|date("g:ia")}}</td>
+                                                <td>{{ sequence.heureFin|date("g:ia")}}</td>
+                                                <td>{{ sequence.date|date ('d/m/y') }}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-warning" data-toggle="modal"
+                                                            data-target="#editSequence{{ sequence.id }}"><i class="far fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                                            data-target="#deleteSequence{{ sequence.id }}"><i class="far fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endif %}
+
+
+                                    <!-- MODAL EDIT SEQUENCE -->
+                                    <div class="modal fade" id="editSequence{{ sequence.id }}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Modifier un sequence</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span>&times;</span></button>
+                                                </div>
+                                                <form method="post" action="{{ path('sequenceModify', {'id': sequence.id}) }}">
+
+                                                    <div class="row">
+                                                        <div class="col">
+
+                                                            <label>Activité :
+                                                                <SELECT name="sequence[activite][]" class="form-control" >
+                                                                    <option>{{ sequence.activite.id }}  {{ sequence.activite.nom }}</option>
+                                                                    {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+                                                                </SELECT>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Personnel :
+                                                                <SELECT name="sequence[personnel][]" class="form-control" >
+                                                                    <option> {{ sequence.personnel.id }} {{ sequence.personnel.user.nom }}</option>
+                                                                    {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
+                                                                </SELECT>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label>Salle :</label>
+                                                            <input type="text" class="form-control" name="sequence[salle]" value="{{ sequence.salle }}" >
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>heure debut :</label>
+                                                            <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" value="{{ sequence.heureDebut|date("g:ia")}}">
+
+                                                        </div>
+                                                        <div class="col">
+                                                            <label>heure fin :</label>
+                                                            <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" value="{{ sequence.heureFin|date("g:ia")}}">
+
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Date :</label>
+                                                            <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy" value="{{ sequence.date|date ('d/m/y') }}">
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <input type="hidden" name="sequence[valid]" value="OK">
+                                                    <button type="submit" class="btn btn-outline-warning">modifier</button>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END MODAL EDIT USER -->
+
+                                    <!-- MODAL DELETE SEQUENCE -->
+                                    <div class="modal fade" id="deleteSequence{{ sequence.id }}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Suppression de sequence</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span>&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Êtes-vous sûr de vouloir effacer  le sequence   de  n° {{ sequence.id }}
+                                                        " ?</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <a href="{{ path('deleteSequence', {'id': sequence.id}) }}">
+                                                        <button type="button" class="btn  btn-outline-success">Supprimer
+                                                        </button>
+                                                    </a>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                            data-dismiss="modal">Annuler
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END MODAL DELETE SEQUENCE -->
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- LES MODALS -->
+
+
+    <!-- MODAL AJOUT SEQUENCE -->
+    <div class="modal fade" id="formUser" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajout d'un utilisateur</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <form method="post" action="{{ path('sequenceAjout') }}"  style=" margin: 10px 30px 52px 42px;">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <label>Activité :
+                                <SELECT name="sequence[activite][]" class="form-control" >
+                                    {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+                                </SELECT>
+                            </label>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col">
+                            <label>Personnel :
+                                <SELECT name="sequence[personnel][]" class="form-control" >
+                                    {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
+                                </SELECT>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label>Salle :</label>
+                            <input type="text" class="form-control" name="sequence[salle]" >
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col">
+                            <label>heure debut :</label>
+                            <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" >
+                        </div>
+                        <div class="col">
+                            <label>heure fin :</label>
+                            <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" >
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <label>Date :</label>
+                            <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy">
+                        </div>
+
+                    </div>
+                    <br>
+                    <input type="hidden" name="sequence[valid]" value="OK">
+                    <button type="submit" class="btn btn-outline-success">Ajouter</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END AJOUT SEQUENCE  -->
+
+
+    <!-- END LES MODALS -->
+{% endblock %}

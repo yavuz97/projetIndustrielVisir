@@ -47,4 +47,20 @@ class LocalRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Local[] Returns an array of eleve objects
+     */
+    public function findByName($value)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.libelle like :query')
+            ->setParameter('query', "%". $value ."%")
+            // ->orderBy('c.id', 'ASC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

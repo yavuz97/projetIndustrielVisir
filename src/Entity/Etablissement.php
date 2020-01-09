@@ -88,10 +88,16 @@ class Etablissement
      */
     private $lesPersonnels;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Eleve", mappedBy="etablissement")
+     */
+    private $lesEleves;
+
     public function __construct()
     {
         $this->lesCpeEtablissement = new ArrayCollection();
         $this->lesPersonnels = new ArrayCollection();
+        $this->lesEleves = new ArrayCollection();
     }
 
 
@@ -306,6 +312,37 @@ class Etablissement
             // set the owning side to null (unless already changed)
             if ($lesPersonnel->getEtablissement() === $this) {
                 $lesPersonnel->setEtablissement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Eleve[]
+     */
+    public function getLesEleves(): Collection
+    {
+        return $this->lesEleves;
+    }
+
+    public function addLesElefe(Eleve $lesElefe): self
+    {
+        if (!$this->lesEleves->contains($lesElefe)) {
+            $this->lesEleves[] = $lesElefe;
+            $lesElefe->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesElefe(Eleve $lesElefe): self
+    {
+        if ($this->lesEleves->contains($lesElefe)) {
+            $this->lesEleves->removeElement($lesElefe);
+            // set the owning side to null (unless already changed)
+            if ($lesElefe->getEtablissement() === $this) {
+                $lesElefe->setEtablissement(null);
             }
         }
 

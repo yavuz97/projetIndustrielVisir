@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SuivieActiviteController!{% endblock %}
+
+{% block body %}
+    {% for suivie in lesSuivies %}
+
+    {{ suivie.travailAfaire }}
+    {% endfor %}
+
+
+
+{% endblock %}

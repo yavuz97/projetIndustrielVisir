@@ -1,147 +1,363 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SequenceController!{% endblock %}
-
 {% block body %}
 
 
+    <!-- CONTAINER -->
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <h1 class="row justify-content-center">Liste des sequences</h1>
+                <hr class="w-25"/>
+                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#formUser">
+                    Ajouter une sequence
+                </button>
 
+                <!-- NOTES -->
+                <hr class="w-25"/>
 
-        <table class="table table-borderless">
-            <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">activite</th>
-                <th scope="col">personnel</th>
-                <th scope="col">salle</th>
-                <th scope="col">heure debut</th>
-                <th scope="col">heure fin</th>
-                <th scope="col">date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for sequence in lesSequences %}
-                <tr>
-                    <th scope="row">{{ sequence.id }}</th>
-                   <td>{{ sequence.activite.nom }}</td>
-                    <td>{{ sequence.personnel.user.nom }}</td>
-                    <td>{{ sequence.salle}}</td>
-                    <td>{{ sequence.heureDebut|date("g:ia")}}</td>
-                    <td>{{ sequence.heureFin|date("g:ia")}}</td>
-                    <td>{{ sequence.date|date ('d/m/y') }}</td>
-                </tr>
-            {% endfor %}
+                <!-- MODAL AJOUT SEQUENCE -->
+                <div class="modal fade" id="formUser" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ajout d'un utilisateur</h5>
+                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                            </div>
+                            <form method="post" action="{{ path('sequenceAjout') }}">
 
-            </tbody>
-        </table>
+                                <div class="row">
+                                    <div class="col">
 
+                                        <label>Activité :
+                                            <SELECT name="sequence[activite][]" class="form-control" >
+                                                {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+                                            </SELECT>
+                                        </label>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Personnel :
+                                            <SELECT name="sequence[personnel][]" class="form-control" >
+                                                {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
+                                            </SELECT>
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Salle :</label>
+                                        <input type="text" class="form-control" name="sequence[salle]" >
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>heure debut :</label>
+                                        <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" >
+                                    </div>
+                                    <div class="col">
+                                        <label>heure fin :</label>
+                                        <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" >
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Date :</label>
+                                        <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy">
+                                    </div>
 
+                                </div>
+                                <br>
+                                <input type="hidden" name="sequence[valid]" value="OK">
+                                <button type="submit" class="btn btn-outline-success">Ajouter</button>
 
-
-
-
-<form method="post" action="{{ path('sequenceAjout') }}">
-
-        <label>Salle :</label>
-        <input type="text" class="form-control" name="sequence[salle]" >
-
-    <SELECT name="sequence[activite][]" class="form-control" >
-        {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
-     </SELECT>
-
-    <SELECT name="sequence[personnel][]" class="form-control" >
-        {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
-    </SELECT>
-
-    <label>heure debut :</label>
-    <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" >
-
-    <label>heure fin :</label>
-    <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" >
-
-    <label>Date :</label>
-    <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy">
-
-        <input type="hidden" name="sequence[valid]" value="OK">
-        <button type="submit" class="btn btn-outline-success">Ajouter</button>
-
-</form>
-
-
-
-
-
-
-    {% for sequence in lesSequences %}
-        <button  type="button"  href="#" role="button" data-toggle="modal"
-                 data-target="#deleteSequence{{ sequence.id }}" class="ActivitesBtn btn btn-danger  btn-block btn-sm">supprimer le sequence</button>
-
-
-
-        <!-- MODAL DELETE SEQUENCE -->
-        <div class="modal fade" id="deleteSequence{{ sequence.id }}" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Suppression de sequence</h5>
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Êtes-vous sûr de vouloir effacer  le sequence   de  n° {{ sequence.id }}
-                            " ?</p>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <a href="{{ path('deleteSequence', {'id': sequence.id}) }}">
-                            <button type="button" class="btn  btn-outline-success">Supprimer
-                            </button>
-                        </a>
-                        <button type="button" class="btn btn-outline-danger"
-                                data-dismiss="modal">Annuler
-                        </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <!-- END AJOUT SEQUENCE  -->
+
+                <hr class="w-25"/>
+                <!-- TABLE SEQUENCE -->
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Identifiant</th>
+                        <th scope="col">activite</th>
+                        <th scope="col">personnel</th>
+                        <th scope="col">salle</th>
+                        <th scope="col">heure debut</th>
+                        <th scope="col">heure fin</th>
+                        <th scope="col">date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for sequence in lesSequences %}
+                        <tr>
+                            <td><a  href = "{{path('showSequence', {'id': sequence.id})}}"> {{ sequence.id }} </a></td>
+                            <td>{{ sequence.activite.nom }}</td>
+                            <td>{{ sequence.personnel.user.nom }}</td>
+                            <td>{{ sequence.salle}}</td>
+                            <td>{{ sequence.heureDebut|date("g:ia")}}</td>
+                            <td>{{ sequence.heureFin|date("g:ia")}}</td>
+                            <td>{{ sequence.date|date ('d/m/y') }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-info" data-toggle="modal"
+                                        data-target="#ajoutEleve{{ sequence.id }}"><i class="fas fa-key"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-warning" data-toggle="modal"
+                                        data-target="#editSequence{{ sequence.id }}"><i class="far fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#deleteSequence{{ sequence.id }}"><i class="far fa-trash-alt"></i>
+                                </button>
+
+
+
+                                <!-- MODAL AJOUT ELEVE SEQUENCE -->
+                                <div class="modal fade" id="ajoutEleve{{ sequence.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modifier un sequence</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span></button>
+                                            </div>
+                                            <form method="post" action="{{ path('sequenceAjoutEleve', {'id': sequence.id}) }}">
+                                                <div class="ajoutEleve" id="dynamic-fieldsEleve">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Eleve :
+                                                                <SELECT name="ajoutEleve[eleve][]" class="form-control" >
+                                                                    {% for eleve in lesEleves%}  <OPTION> {{ eleve.id }} {{ eleve.nom }}  {% endfor %}
+                                                                </SELECT>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <label>Ajout :</label>
+                                                            <button type="button" id="add-fieldsEleve"
+                                                                    class="btn btn-outline-success"><i
+                                                                        class="far fa-plus-square"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Travaille à faire  :</label>
+                                                            <input type="text" class="form-control" name="ajoutEleve[travailAFaire][]" >
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Travaille à prevoir  :</label>
+                                                            <input type="text" class="form-control" name="ajoutEleve[travailAprevoir][]" >
+                                                        </div>
+                                                    </div>
+                                                </div>  <!-- END div specification -->
+                                                <input type="hidden" name="ajoutEleve[valid]" value="OK">
+                                                <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL EDIT AJOUT ELEVE SEQUENCE -->
+
+
+                                <!-- MODAL EDIT SEQUENCE -->
+                                <div class="modal fade" id="editSequence{{ sequence.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modifier un sequence</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span></button>
+                                            </div>
+                                            <form method="post" action="{{ path('sequenceModify', {'id': sequence.id}) }}">
+
+                                                <div class="row">
+                                                    <div class="col">
+
+                                                        <label>Activité :
+                                                            <SELECT name="sequence[activite][]" class="form-control" >
+                                                                <option>{{ sequence.activite.id }}  {{ sequence.activite.nom }}</option>
+                                                                {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
+                                                            </SELECT>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label>Personnel :
+                                                            <SELECT name="sequence[personnel][]" class="form-control" >
+                                                                <option> {{ sequence.personnel.id }} {{ sequence.personnel.user.nom }}</option>
+                                                                {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
+                                                            </SELECT>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label>Salle :</label>
+                                                        <input type="text" class="form-control" name="sequence[salle]" value="{{ sequence.salle }}" >
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label>heure debut :</label>
+                                                        <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" value="{{ sequence.heureDebut|date("g:ia")}}">
+
+                                                    </div>
+                                                    <div class="col">
+                                                        <label>heure fin :</label>
+                                                        <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" value="{{ sequence.heureFin|date("g:ia")}}">
+
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label>Date :</label>
+                                                        <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy" value="{{ sequence.date|date ('d/m/y') }}">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <input type="hidden" name="sequence[valid]" value="OK">
+                                                <button type="submit" class="btn btn-outline-warning">modifier</button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL EDIT USER -->
+
+                                <!-- MODAL DELETE SEQUENCE -->
+                                <div class="modal fade" id="deleteSequence{{ sequence.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Suppression de sequence</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Êtes-vous sûr de vouloir effacer  le sequence   de  n° {{ sequence.id }}
+                                                    " ?</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <a href="{{ path('deleteSequence', {'id': sequence.id}) }}">
+                                                    <button type="button" class="btn  btn-outline-success">Supprimer
+                                                    </button>
+                                                </a>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-dismiss="modal">Annuler
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL DELETE SEQUENCE -->
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- END TABLE USERS -->
             </div>
         </div>
-        <!-- END MODAL DELETE SEQUENCE -->
+
+
+
+    </div>
+    <!-- END CONTAINER -->
+
+
+    <script>
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add-field').click(function () {
+                i++;
+                $('#dynamic-fieldsEleve').append('' +
+                    '<br/>' +
+                    '<br/>' +
+                    '<div class="row" id="rowK' + i + '">' +
+                    '<div class="row">' +
+                    '<div class="col">' +
+                    '<SELECT name="ajoutEleve[eleve][]" class="form-control" size="1">' +
+                    '<OPTION>  {% for eleve in lesEleves%}  <OPTION> {{ eleve.id }} {{ eleve.nom }}  {% endfor %}' +
+                    '</SELECT>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>add:</label>' +
+                    '<br/>' +
+                    '<button type="button" name="remove" id="' + i + '" class="btn btn-outline-danger remove-field"><i class="far fa-minus-square"></i></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>travaille à faire :</label>' +
+                    '<input type="text" name="ajoutEleve[travailAFaire][]" required class="form-control"/>' +
+                    '</div>' +
+                    '<br/>' +
+                    '<div class="col">' +
+                    '<label>travaille à faire :</label>' +
+                    '<input type="text" name="ajoutEleve[travailAprevoir][]" required class="form-control"/>' +
+                    '</div>' +
+                    '<br/>' +
+                    '</div>');
+            });
+            $(document).on('click', '.remove-field', function () {
+                var button_id = $(this).attr("id");
+                $('#rowK' + button_id + '').remove();
+            });
+        });
+
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add-fieldsEleve').click(function () {
+                i++;
+                $('#dynamic-fieldsEleve').append('' +
+                    '<br/>' +
+                    '<br/>' +
+                    '<div class="row" id="rowK' + i + '">' +
+                    '<div class="row">' +
+                    '<div class="col">' +
+                    '<SELECT name="ajoutEleve[eleve][]" class="form-control" size="1">' +
+                    '<OPTION>  {% for eleve in lesEleves%}  <OPTION> {{ eleve.id }} {{ eleve.nom }}  {% endfor %}' +
+                    '</SELECT>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>add:</label>' +
+                    '<br/>' +
+                    '<button type="button" name="remove" id="' + i + '" class="btn btn-outline-danger remove-field"><i class="far fa-minus-square"></i></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                    '<div class="col">' +
+                    '<label>travaille à faire :</label>' +
+                    '<input type="text" name="ajoutEleve[travailAFaire][]" required class="form-control"/>' +
+                    '</div>' +
+                    '<br/>' +
+                    '<div class="col">' +
+                    '<label>travaille à faire :</label>' +
+                    '<input type="text" name="ajoutEleve[travailAprevoir][]" required class="form-control"/>' +
+                    '</div>' +
+                    '<br/>' +
+                    '</div>');
+            });
+            $(document).on('click', '.remove-field', function () {
+                var button_id = $(this).attr("id");
+                $('#rowK' + button_id + '').remove();
+            });
+        });
 
 
 
 
-        <form method="post" action="{{ path('sequenceModify', {'id': sequence.id}) }}">
-
-        <label>Salle :</label>
-        <input type="text" class="form-control" name="sequence[salle]" value="{{ sequence.salle }}" >
-            <br>
-
-        <SELECT name="sequence[activite][]" class="form-control" >
-            <option>{{ sequence.activite.id }}  {{ sequence.activite.nom }}</option>
-            {% for activite in lesActivites%}  <OPTION> {{ activite.id }} {{ activite.nom }}  {% endfor %}
-        </SELECT>
-
-        <SELECT name="sequence[personnel][]" class="form-control" >
-            <option> {{ sequence.personnel.id }} {{ sequence.personnel.user.nom }}</option>
-            {% for personnel in lesPersonnels %}  <OPTION> {{ personnel.id }} {{personnel.user.nom }}  {% endfor %}
-        </SELECT>
-
-        <label>heure debut :</label>
-        <input type="time" class="form-control" name="sequence[heureDebut]"  placeholder="00:00:00" value="{{ sequence.heureDebut|date("g:ia")}}">
-
-        <label>heure fin :</label>
-        <input type="time" class="form-control" name="sequence[heureFin]"  placeholder="00:00:00" value="{{ sequence.heureFin|date("g:ia")}}">
-
-        <label>Date :</label>
-        <input type="date" class="form-control" name="sequence[date]"  placeholder="dd-mm-yyyy" value="{{ sequence.date|date ('d/m/y') }}">
-
-        <input type="hidden" name="sequence[valid]" value="OK">
-        <button type="submit" class="btn btn-outline-warning">modifier</button>
-
-    </form>
-
-
-    {% endfor %}
-
-
-
+    </script>
 {% endblock %}

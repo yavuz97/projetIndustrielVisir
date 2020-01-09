@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link href="{{ asset('css/essaie.css') }}" rel="stylesheet"/>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <div class="row text-center">
+            <main>
+                <h1>Faire les absences </h1>
+                <table style="border-radius: 2pc">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>absent</th>
+                        <th>travail  à faire</th>
+                        <th>travaille effectué</th>
+                        <th>travail à prevoir</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <form method="post" action="{{ path('addAbsence', {'id': sequence.id}) }}">
+                        {% for unSequence in lesSequences %}
+                            {% for eleve in unSequence.lesSuivieActitivites %}
+                                {% if sequence.id == eleve.sequence.id %}
+                                    <tr>
+                                        <td data-label="Name">
+                                            {{ eleve.eleve.id }}
+                                        </td>
+                                        <td data-label="Grid">
+                                            {{ eleve.eleve.nom }}
+                                        </td>
+                                        <td data-label="Type">
+                                            {{ eleve.eleve.prenom }}
+                                        </td>
+                                        <td data-label="Region">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label>
+                                                        <SELECT type="text" class="form-control" name="absence[absent][]">
+                                                            <option>{{ eleve.absent }}</option>
+                                                            <OPTION>non</OPTION>
+                                                            <option>oui</option>
+                                                            <option>PNI</option>
+                                                        </SELECT>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td data-label="Chickens">
+                                            {{ eleve.travailAfaire }}
+                                        </td>
+                                        <td data-label="Pigs">
+                                            {{ eleve.travailAprevoir }}
+                                        </td>
+                                        <td data-label="Snakes">
+                                            {{ eleve.travailEffectue }}
+                                        </td>
+                                        <td>
+                                            {{ eleve.id }}
+                                            <a href="{{ path('deleteSequenceSuivie', {'id': eleve.id}) }}">
+                                                <button type="button" class="btn btn-outline-danger">Supprimer <i class="far fa-trash-alt"></i> </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                        <input type="hidden" name="absence[valid]" value="OK">
+                        <br>
+                        <button type="submit" class="btn btn-outline-success" style="width: 25pc">Terminer </button>
+                        <br>
+                        <br>
+                        <br>
+                    </form>
+                    </tbody>
+                </table>
+            </main>
+        </div>
+    </div>
+    <!-- END CONTAINER -->
+
+
+{% endblock %}

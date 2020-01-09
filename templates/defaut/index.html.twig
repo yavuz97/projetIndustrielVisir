@@ -24,7 +24,7 @@
 
     <!-- page d'acceuille si connecté -->
         <!-- si professeur -->
-    {% if is_granted('ROLE_PROFESSEUR') %}
+    {% if is_granted('ROLE_ADMIN') %}
         <link href="{{ asset('css/acceuille.css') }}" rel="stylesheet"/>
         {% block menuAcceuille %}
 
@@ -38,19 +38,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col colStyle" data-toggle="modal" data-target="#personnel">
+                        <div class="col colStyle" data-toggle="modal" data-target="#personjnel">
                             <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                                 <div class="card-body">
+
                                     <h4 class="card-title">PERSONNEL </h4>
+                                    <a  href = "{{path('les_personnels')}}">
                                     <img class="iconMenu" src="{{ asset('icon/education/reading.svg') }}" alt="Symfony!"/>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col colStyle" data-toggle="modal" data-target="#etablissements">
+                        <div class="col colStyle" data-toggle="modal" data-target="#etablissementsX">
                             <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                                 <div class="card-body">
                                     <h4 class="card-title">ETABLISSEMENTS</h4>
+                                    <a  href = "{{path('les_etablissements')}}">
                                     <img class="iconMenu" src="{{ asset('icon/education/school.svg') }}" alt="Symfony!"/>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -64,11 +69,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col colStyle" data-toggle="modal" data-target="#activites">
+                        <div class="col colStyle" data-toggle="modal" data-target="#activitesX">
                             <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                                 <div class="card-body">
                                     <h4 class="card-title">ACTIVITES</h4>
+                                    <a  href = "{{path('les_activites')}}">
                                     <img class="iconMenu" src="{{ asset('icon/education/theater.svg') }}" alt="Symfony!"/>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -80,11 +87,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col colStyle" data-toggle="modal" data-target="#incidents">
+                        <div class="col colStyle" data-toggle="modal" data-target="#incidentsX">
                             <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                                 <div class="card-body">
-                                    <h4 class="card-title">INCIDENTS</h4>
+                                    <h4 class="card-title">SEQUENCES</h4>
+                                    <a  href = "{{path('lesSequences')}}">
                                     <img class="iconMenu" src="{{ asset('icon/education/rocket.svg') }}" alt="Symfony!"/>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +143,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <button> </button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

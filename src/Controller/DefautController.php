@@ -15,6 +15,19 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DefautController extends AbstractController
 {
+
+
+    /**
+     * @Route("/essaieTemplate", name="essaieTemplate")
+     */
+    public function essaieTemplate()
+    {
+        return $this->render('defaut/essaieTemplate.html.twig', [
+            'controller_name' => 'DefautController',
+        ]);
+    }
+
+
     /**
      * @Route("/", name="defaut_index")
      */

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SecurityController!{% endblock %}
+
+{% block body %}
+
+
+    <link href="{{ asset('css/littleTable.css') }}" rel="stylesheet"/>
+
+
+<h3>Liste des personnel qui rentre à qui rentre à l'etablissement </h3>
+<button class="btn btn-info " style="position: center"  onClick="window.print()">Imprimez cette page </button>
+
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th scope="col">PRENOM</th>
+            <th scope="col">NOM</th>
+            <th scope="col">ORGANISME </th>
+            <th scope="col">Voiture 1 Marque </th>
+            <th scope="col">Voiture 1 Couleur </th>
+            <th scope="col">Voiture 1 Immarticulation </th>
+            <th scope="col">Voiture 2 Marque </th>
+            <th scope="col">Voiture 2 Couleur </th>
+            <th scope="col">Voiture 2 Immarticulation </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            {% for personnel in user.lesPersonnels  %}
+                <tr>
+                    <td style="height: 3px">{{ user.prenom }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ personnel.organisme }}</td>
+                    {% if  personnel.lesVoitures is empty  %}
+                        <td>------</td>
+                        <td>------</td>
+                        <td>------</td>
+                    {% endif %}
+                    {% for voiture in personnel.lesVoitures %}
+
+                        <td>{{ voiture.marque }}</td>
+                        <td>{{ voiture.couleur }}</td>
+                        <td>{{ voiture.immarticulation }}</td>
+                    {% endfor %}
+                    {% if  personnel.lesVoitures| length < 2    %}
+                        <td>------</td>
+                        <td>------</td>
+                        <td>------</td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

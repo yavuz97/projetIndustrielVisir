@@ -8,6 +8,13 @@ body {
     position: relative;
 }
 
+a.nounderline:link
+{
+    text-decoration:none;
+    text-decoration-color: white;
+}
+
+
 .card-title{
     text-align: center;
 

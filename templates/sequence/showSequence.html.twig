@@ -1,0 +1,316 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <link href="{{ asset('css/suivieSequence.css') }}" rel="stylesheet"/>
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12 ">
+                <div class="row">
+                    <div class="col-md-2 colMenuYav">
+                        <img src="{{ asset('image/sequence/menu.png') }}" class="photoMenuSequence">
+                        <div class="menuButtonYav">
+
+                            <a href="{{ path('lesSequences') }}">
+                                <button  type="submit" class="btn btn-block btn-outline-primary btnYav">
+                                    Les Sequences
+                                </button>
+                            </a>
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="col-md-12 labelYav">
+                                    <span class="badge badge-success">Ajouter des élèves</span>
+                                </div>
+                                <img src="{{ asset('image/sequence/addStudent.png') }}" class="imgAjoutSequence" data-toggle="modal" data-target=".bd-example-modal-lg">
+
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="row">
+                                    <hr class="w-25"/>
+                                    <h1>{{ sequence.activite.nom }}</h1>
+                                    &nbsp &nbsp<h4>n° {{ sequence.id }}</h4>
+                                    <hr class="w-25"/>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h3>Personnel : {{ sequence.personnel.user.nom }}</h3>
+                                        <br>
+                                        <h3>Salle : {{ sequence.salle }}</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h3> {{ sequence.date|date('d/m/Y') }}</h3>
+                                        <br>
+                                        <h3> {{ sequence.heureDebut |date("g:ia")}}  à   {{ sequence.heureFin |date("g:ia") }}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <a href="{{ path('addAbsence', {'id': sequence.id}) }}">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block btnAbsence">
+                                            <h1 style="color: white">Faire les absences</h1>
+                                        </button>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+
+
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>absent</th>
+                                    <th>travail  à faire</th>
+                                    <th>travaille effectué</th>
+                                    <th>travail à prevoir</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for unSequence in lesSequences %}
+                                    {% for eleve in unSequence.lesSuivieActitivites %}
+                                        {% if sequence.id == eleve.sequence.id %}
+
+                                            <tr>
+                                                <td data-label="Name">
+                                                    {{ eleve.eleve.id }}
+                                                </td>
+                                                <td data-label="Grid">
+                                                    {{ eleve.eleve.nom }}
+                                                </td>
+                                                <td data-label="Type">
+                                                    {{ eleve.eleve.prenom }}
+                                                </td>
+                                                <td data-label="Region">
+                                                    {% if   eleve.absent  == "oui" %}
+                                                        <span class="no">&#10007;</span>
+                                                    {% elseif eleve.absent  == null %}
+                                                        <p style="-webkit-text-fill-color:#c69500 ">?</p>
+                                                    {% elseif eleve.absent  == "PNI" %}
+                                                        <p style="-webkit-text-fill-color: #5eb5e0 ">PNI</p>
+                                                    {% else %}
+                                                        <span class="yes">&#10003;</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td data-label="Chickens">
+                                                    {{ eleve.travailAfaire }}
+                                                </td>
+                                                <td data-label="Pigs">
+                                                    {{ eleve.travailAprevoir }}
+                                                </td>
+                                                <td data-label="Snakes">
+                                                    {{ eleve.travailEffectue }}
+                                                </td>
+                                                <td>
+                                                    {{ eleve.id }}
+                                                    <a href="{{ path('deleteSequenceSuivie', {'id': eleve.id}) }}">
+                                                        <button type="button" class="btn btn-outline-danger">Supprimer <i class="far fa-trash-alt"></i> </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- MODAL AJOUT ELEVE  -->
+    <div class="modal fade bd-example-modal-lg"     id="formUser" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <form method="post" action="{{ path('showSequence', {'id': sequence.id}) }}">
+                        <div class="specification" id="dynamic-fieldsX">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Eleve :</label>
+                                    <<SELECT name="ajoutEleve[eleve][]" class="form-control" >
+                                        {% for eleveChoix in lesElevesAChoisir%}
+                                        {% for eleve in lesEleves%}
+                                        {% if eleve.id == eleveChoix %}
+                                        <OPTION>   {{ eleve.nom }} {{ eleve.id  }}
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endfor %}
+                                    </SELECT>
+                                </div>
+                                <div class="col">
+                                    <label>Travaille à faire  :</label>
+                                    <input type="text" class="form-control" name="ajoutEleve[travailAFaire][]" >
+
+
+
+                                </div>
+                                <div class="col">
+
+                                    <label>Travaille à prevoir  :</label>
+                                    <input type="text" class="form-control" name="ajoutEleve[travailAprevoir][]" >
+
+                                </div>
+
+                                <div class="col">
+                                    <label>Ajout :</label>
+                                    <br/>
+                                    <button type="button" id="add-fieldsX"
+                                            class="btn btn-outline-success"><i
+                                                class="far fa-plus-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="ajoutEleve[valid]" value="OK">
+                        <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END  MODAL AJOUT ELEVE  -->
+
+
+    <script>
+
+
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add-fieldX').click(function () {
+                i++;
+                $('#dynamic-fieldX').append('' +
+                    '<div class="row" id="row' + i + '">' +
+                    '<div class="col">' +
+                    '<SELECT name="ajoutEleve[eleve][]" class="form-control" size="1">' +
+                    '<OPTION>   {% for eleveChoix in lesElevesAChoisir%}  {% for eleve in lesEleves%}    {% if eleve.id == eleveChoix %} <OPTION>  {{ eleve.nom }} {{ eleve.id }} {% endif %}  {% endfor %} {% endfor %} ' +
+                    '</SELECT>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Travaille à faire  :</label>' +
+                    ' <input type="text" class="form-control" name="ajoutEleve[travailAFaire][]" >' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Travaille à prevoir  :</label>' +
+                    ' <input type="text" class="form-control" name="ajoutEleve[travailAprevoir][]" >' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Ajout :</label>' +
+                    '<br/>' +
+                    '<button type="button" name="remove" id="' + i + '" class="btn btn-outline-danger remove-field"><i class="far fa-minus-square"></i></button>' +
+                    '</div>' +
+                    '<br/>' +
+                    '</div>');
+            });
+            $(document).on('click', '.remove-field', function () {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add-fieldsX').click(function () {
+                i++;
+                $('#dynamic-fieldsX').append('' +
+                    '<div class="row" id="row' + i + '">' +
+                    '<div class="col">' +
+                    '<SELECT name="ajoutEleve[eleve][]" class="form-control" size="1">' +
+                    '<OPTION>   {% for eleveChoix in lesElevesAChoisir%}  {% for eleve in lesEleves%}    {% if eleve.id == eleveChoix %} <OPTION>  {{ eleve.nom }} {{ eleve.id }}  {% endif %} {% endfor %} {% endfor %} ' +
+                    '</SELECT>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Travaille à faire  :</label>' +
+                    ' <input type="text" class="form-control" name="ajoutEleve[travailAFaire][]" >' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Travaille à prevoir  :</label>' +
+                    ' <input type="text" class="form-control" name="ajoutEleve[travailAprevoir][]" >' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<label>Ajout :</label>' +
+                    '<br/>' +
+                    '<button type="button" name="remove" id="' + i + '" class="btn btn-outline-danger remove-field"><i class="far fa-minus-square"></i></button>' +
+                    '</div>' +
+                    '<br/>' +
+                    '</div>');
+            });
+            $(document).on('click', '.remove-field', function () {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
+
+
+
+
+
+
+        $(function(){
+            $('table').tablesorter();
+        });
+
+
+
+
+
+
+
+        $(document).ready(function(){
+            var i=1;
+            $('#add').click(function(){
+                i++;
+                $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="ajoutEleve[eleve][]" placeholder="Enter your Name" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');
+            });
+
+            $(document).on('click', '.btn_remove', function(){
+                var button_id = $(this).attr("id");
+                $('#row'+button_id+'').remove();
+            });
+
+            $('#submit').click(function(){
+                $.ajax({
+                    url: "{{path('showSequence', {'id': sequence.id})}}",
+                    method:"POST",
+                    data:$('#add_name').serialize(),
+                    success:function(data)
+                    {
+                        alert(data);
+                        $('#add_name')[0].reset();
+                    }
+                });
+            });
+
+        });
+
+
+
+
+    </script>
+
+{% endblock %}

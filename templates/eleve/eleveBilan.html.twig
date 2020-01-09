@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EleveController!{% endblock %}
+
+{% block body %}
+
+
+
+
+
+    <br>
+        <button> Eleve nom : {{ eleve.nom }}</button>
+    <br>
+    <br>
+    <button> Eleve Prenom {{ eleve.prenom }}</button>
+
+
+    <hr>
+
+
+
+
+
+    <h2> Liste des activités participé </h2>
+
+    <table class="table table-bordered text-center">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Sequence Id</th>
+            <th scope="col">activite</th>
+            <th scope="col">personnel</th>
+            <th scope="col">salle</th>
+            <th scope="col">heure debut</th>
+            <th scope="col">heure fin</th>
+            <th scope="col">date</th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        {% for sequenceEleve in eleve.lesSuivieActivites %}
+
+            <tr>
+                <td> {{ sequenceEleve.sequence.id}} </td>
+                <td> {{ sequenceEleve.sequence.activite.nom }} </td>
+                <td> {{ sequenceEleve.sequence.personnel.user.nom }} </td>
+                <td> {{ sequenceEleve.sequence.salle }} </td>
+                <td>{{ sequenceEleve.sequence.heureDebut|date("g:ia")}}</td>
+                <td>{{ sequenceEleve.sequence.heureFin|date("g:ia")}}</td>
+                <td>{{ sequenceEleve.sequence.date|date ('d/m/y') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <hr>
+
+    <h2>Tableau Croisé </h2>
+
+
+    <button>  Tout les activités, nb: {{ eleve.lesSuivieActivites | length }} </button>
+
+    <table class="table table-bordered text-center">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Sequence Id</th>
+            <th scope="col">activite</th>
+            <th scope="col">present</th>
+            <th scope="col">absent</th>
+            <th scope="col"> PNI</th>
+            <th scope="col">TG</th>
+            <th scope="col">TG Réel</th></th>
+            <th scope="col">date</th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        {% for tab in eleveTab %}
+                <tr>
+                    <td> {{ tab.id}} </td>
+                    <td> {{ tab.nom}} </td>
+                    <td> {{ tab.present}} </td>
+                    <td> {{ tab.absent}} </td>
+                    <td> {{ tab.pni}} </td>
+                    <td> {{ tab.TG}} </td>
+                    <td> {{ tab.Treel}} </td>
+                    <td> {{ tab.date | date('d/m/Y')}} </td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <form method="post" action="{{ path('eleve_bilan', {'id': eleve.id}) }}">
+
+        <div class="row">
+            <div class="col">
+                <label>Date 1 :</label>
+                <input type="date" class="form-control" name="bilan[dateUn]"  placeholder="dd-mm-yyyy">
+            </div>
+
+            <div class="col">
+                <label>Date 2 :</label>
+                <input type="date" class="form-control" name="bilan[dateDeux]"  placeholder="dd-mm-yyyy">
+            </div>
+        </div>
+
+        <input type="hidden" name="bilan[valid]" value="OK">
+        <button type="submit" class="btn btn-outline-success">choisir les dates</button>
+    </form>
+
+
+    <h2>Tableau Croisé entre les dates </h2>
+
+
+    <button>   date 1 :  {{  date1|date('d-m-Y')  }}  et date 2 :  {{  date2|date('d-m-Y')  }} </button>
+
+    <table class="table table-bordered text-center">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Sequence Id</th>
+            <th scope="col">activite</th>
+            <th scope="col">present</th>
+            <th scope="col">absent</th>
+            <th scope="col"> PNI</th>
+            <th scope="col">TG</th>
+            <th scope="col">TG Réel</th></th>
+            <th scope="col">date</th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        {% for tab in eleveTab %}
+            {% if tab.date|date('Y-m-d') >=  date1|date('Y-m-d')  and   tab.date|date('Y-m-d') <=  date2|date('Y-m-d') %}
+
+
+                <tr>
+                    <td> {{ tab.id}} </td>
+                    <td> {{ tab.nom}} </td>
+                    <td> {{ tab.present}} </td>
+                    <td> {{ tab.absent}} </td>
+                    <td> {{ tab.pni}} </td>
+                    <td> {{ tab.TG}} </td>
+                    <td> {{ tab.Treel}} </td>
+                    <td> {{ tab.date | date('d/m/Y')}} </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+
+{% endblock %}

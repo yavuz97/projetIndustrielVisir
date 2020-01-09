@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class Sequence
      * @ORM\Column(type="date")
      */
     private $date;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SuivieActivite", mappedBy="sequence", orphanRemoval=true)
+     */
+    private $lesSuivieActitivites;
+
+    public function __construct()
+    {
+        $this->lesSuivieActitivites = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,6 +136,37 @@ class Sequence
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SuivieActivite[]
+     */
+    public function getLesSuivieActitivites(): Collection
+    {
+        return $this->lesSuivieActitivites;
+    }
+
+    public function addLesSuivieActitivite(SuivieActivite $lesSuivieActitivite): self
+    {
+        if (!$this->lesSuivieActitivites->contains($lesSuivieActitivite)) {
+            $this->lesSuivieActitivites[] = $lesSuivieActitivite;
+            $lesSuivieActitivite->setSequence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesSuivieActitivite(SuivieActivite $lesSuivieActitivite): self
+    {
+        if ($this->lesSuivieActitivites->contains($lesSuivieActitivite)) {
+            $this->lesSuivieActitivites->removeElement($lesSuivieActitivite);
+            // set the owning side to null (unless already changed)
+            if ($lesSuivieActitivite->getSequence() === $this) {
+                $lesSuivieActitivite->setSequence(null);
+            }
+        }
 
         return $this;
     }

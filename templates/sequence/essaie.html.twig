@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+
+
+
+
+
+    <div class="ana">
+
+        <input type="text" id="ara" />
+
+        <div class="kelimeler">
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        $(function(){
+
+
+
+            $("#ara").keyup(function(){//inputta bir tuşa basılırsa
+
+                var kelime=$(this).val();//değerini al
+
+                $.post("{{ path('essaie123') }}",{"kelime":kelime},function(al){ //ara.php ye gönder
+
+                    $(".kelimeler").html(al);//gelen verileri .kerlimeler clasına ait divin içine yaz
+
+                });
+
+            });
+
+        });
+
+
+
+        function tamamla(al){//tamamla fonsiyonu çağırılınca gönderilen veriyi al
+
+            $("#ara").val(al);//inputa koy
+
+            $(".kelimeler").text("");//kelimeler clasına ait divi temizle
+
+        }
+
+    </script>
+
+
+{% endblock %}

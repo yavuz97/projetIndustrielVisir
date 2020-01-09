@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EleveController!{% endblock %}
+
+{% block body %}
+
+        <table class="table table-borderless">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Sexe </th>
+                <th scope="col">Etabl d'origine </th>
+                <th scope="col">Classe d'origine </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for eleve in lesEleves %}
+                    <tr>
+                        <th scope="row"><a href="{{ path('eleve_show', {'id':eleve.id }) }}"> {{ eleve.id }}</th>
+                        <td>{{ eleve.nom }}</td>
+                        <td>{{ eleve.prenom }}</td>
+                        <td>{{ eleve.dateNaiss }}</td>
+                        <td>{{ eleve.sexe }}</td>
+                        <td>{{ eleve.etabOrigine }}</td>
+                        <td>{{ eleve.classOrigine }}</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+{% endblock %}

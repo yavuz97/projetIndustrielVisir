@@ -114,11 +114,17 @@ class Personnel
      */
     private $lesSequences;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Eleve", mappedBy="personnel")
+     */
+    private $lesEleves;
+
     public function __construct()
     {
         $this->lesActivites = new ArrayCollection();
         $this->lesVoitures = new ArrayCollection();
         $this->lesSequences = new ArrayCollection();
+        $this->lesEleves = new ArrayCollection();
     }
 
 
@@ -403,6 +409,37 @@ class Personnel
             // set the owning side to null (unless already changed)
             if ($lesSequence->getPersonnel() === $this) {
                 $lesSequence->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Eleve[]
+     */
+    public function getLesEleves(): Collection
+    {
+        return $this->lesEleves;
+    }
+
+    public function addLesElefe(Eleve $lesElefe): self
+    {
+        if (!$this->lesEleves->contains($lesElefe)) {
+            $this->lesEleves[] = $lesElefe;
+            $lesElefe->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesElefe(Eleve $lesElefe): self
+    {
+        if ($this->lesEleves->contains($lesElefe)) {
+            $this->lesEleves->removeElement($lesElefe);
+            // set the owning side to null (unless already changed)
+            if ($lesElefe->getPersonnel() === $this) {
+                $lesElefe->setPersonnel(null);
             }
         }
 

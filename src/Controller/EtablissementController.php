@@ -205,14 +205,18 @@ class EtablissementController extends AbstractController
         $etablissementRepo = $this->getDoctrine()->getRepository(Etablissement::class);
         $etablissement= $etablissementRepo->find($id);
         $cpeEtab = $etablissement->getLesCpeEtablissement();
+
         foreach ($cpeEtab as $cpe){
 
             $etablissement->removeLesCpeEtablissement($cpe);
             $manager->remove($cpe);
         }
 
+        $lesEleves = $etablissement->getLesEleves();
 
-
+        foreach ($lesEleves as $eleve){
+            $etablissement->removeLesElefe($eleve);
+        }
 
         $manager->remove($etablissement);
 

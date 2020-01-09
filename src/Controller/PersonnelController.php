@@ -136,12 +136,6 @@ class PersonnelController extends AbstractController
                 if ($formActiviteValide <> "aucune"){
 
 
-
-
-              //  $nouveauPersonnelActivite= new PersonnelActivite(); // instance pour ajouter une caractéristique
-
-            //    $nouveauPersonnelActivite->setPersonnel_id($personnel->getId());
-
                 $activite = $request->get('personnelActivite')['activite'][$x]; // activite recupere id et nom de activité
                 $idActivite = (int) filter_var($activite, FILTER_SANITIZE_NUMBER_INT); // extraction de id ( partie integer ) de variable activite
 
@@ -175,6 +169,39 @@ class PersonnelController extends AbstractController
             'lesActivites' => $lesActivites,
             'users' => $users,
             'etabli'=>$etabli
+
+        ]);
+
+    }
+
+
+
+
+    /**
+     * @Route("/PersonnelQuiRentre", name="PersonnelQuiRentre")
+     */
+    public function PersonnelQuiRentre(Request $request, ObjectManager $manager)
+    {
+
+
+
+        //REPO PERONNEL
+        $personnelRepo = $this->getDoctrine()->getRepository(Personnel::class);
+        $lesPersonnels = $personnelRepo->findAll();
+
+        // REPO USER
+        $repoUser = $this->getDoctrine()->getRepository(User::class);
+        $users = $repoUser->findAllAlphabetique();
+
+        $repoVoiture = $this->getDoctrine()->getRepository(VoiturePersonnel::class);
+        $voitures = $repoVoiture->findAll();
+
+
+
+
+        return $this->render('personnel/PersonnelQuiRentre.html.twig', [
+            'lesPersonnels' => $lesPersonnels, // envoi à la vue les les personnels
+            'users' => $users,
 
         ]);
 
@@ -220,7 +247,7 @@ class PersonnelController extends AbstractController
 
 
 
-        return $this->render('personnel/index.html.twig', [
+        return $this->render('PersonnelQuiRentres.html.twig', [
 
 
             'personnel' => $personnel, // envoi à la vue les les personnels
@@ -475,6 +502,16 @@ class PersonnelController extends AbstractController
 
         $repoUser = $this->getDoctrine()->getRepository(User::class);
         $user = $repoUser->find($id);
+
+        $lesPersonnel = $user->getLesPersonnels();
+
+        foreach ($lesPersonnel as $personnel){
+            $lesEleves = $personnel->getLesEleves();
+            foreach ($lesEleves as $eleve){
+                $personnel->removeLesElefe($eleve);
+            }
+        }
+
 
         $manager->remove($user);
         $manager->flush();
